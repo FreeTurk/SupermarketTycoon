@@ -1,7 +1,9 @@
-import javax.swing.*;
-
 class Main {
 
-  JFrame frame = new JFrame();
+  public static void main(String[] args) {
+    Stocks stocksPage = new Stocks();
+
+    stocksPage.initialize_page();
+  }
 
 }
