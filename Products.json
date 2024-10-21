@@ -1,0 +1,122 @@
+{
+  "milk": {
+    "requires_license": "animal_products",
+    "expiry_time": "2 weeks",
+    "requires_aisle": "refrigerator"
+  },
+  "bread": {
+    "requires_license": "bakery_products",
+    "expiry_time": "1 week",
+    "requires_aisle": "bakery"
+  },
+  "eggs": {
+    "requires_license": "animal_products",
+    "expiry_time": "3 weeks",
+    "requires_aisle": "refrigerator"
+  },
+  "chicken": {
+    "requires_license": "meat_products",
+    "expiry_time": "5 days",
+    "requires_aisle": "butchery"
+  },
+  "apples": {
+    "requires_license": "none",
+    "expiry_time": "4 weeks",
+    "requires_aisle": "grocery"
+  },
+  "cereal": {
+    "requires_license": "none",
+    "expiry_time": "6 months",
+    "requires_aisle": "none"
+  },
+  "butter": {
+    "requires_license": "animal_products",
+    "expiry_time": "3 weeks",
+    "requires_aisle": "refrigerator"
+  },
+  "orange_juice": {
+    "requires_license": "none",
+    "expiry_time": "2 weeks",
+    "requires_aisle": "refrigerator"
+  },
+  "pasta": {
+    "requires_license": "none",
+    "expiry_time": "1 year",
+    "requires_aisle": "none"
+  },
+  "tomato_sauce": {
+    "requires_license": "none",
+    "expiry_time": "18 months",
+    "requires_aisle": "none"
+  },
+  "fish": {
+    "requires_license": "seafood_products",
+    "expiry_time": "3 days",
+    "requires_aisle": "seafood_section"
+  },
+  "yogurt": {
+    "requires_license": "animal_products",
+    "expiry_time": "2 weeks",
+    "requires_aisle": "refrigerator"
+  },
+  "bananas": {
+    "requires_license": "none",
+    "expiry_time": "1 week",
+    "requires_aisle": "grocery"
+  },
+  "potatoes": {
+    "requires_license": "none",
+    "expiry_time": "2 months",
+    "requires_aisle": "grocery"
+  },
+  "toilet_paper": {
+    "requires_license": "none",
+    "expiry_time": "none",
+    "requires_aisle": "household"
+  },
+  "shampoo": {
+    "requires_license": "none",
+    "expiry_time": "2 years",
+    "requires_aisle": "household"
+  },
+  "frozen_pizza": {
+    "requires_license": "frozen_food",
+    "expiry_time": "6 months",
+    "requires_aisle": "freezer"
+  },
+  "ice_cream": {
+    "requires_license": "frozen_food",
+    "expiry_time": "6 months",
+    "requires_aisle": "freezer"
+  },
+  "rice": {
+    "requires_license": "none",
+    "expiry_time": "1 year",
+    "requires_aisle": "none"
+  },
+  "olive_oil": {
+    "requires_license": "none",
+    "expiry_time": "1 year",
+    "requires_aisle": "none"
+  },
+  "chocolate": {
+    "requires_license": "none",
+    "expiry_time": "1 year",
+    "requires_aisle": "none"
+  },
+  "canned_tuna": {
+    "requires_license": "none",
+    "expiry_time": "2 years",
+    "requires_aisle": "none"
+  },
+  "cheese": {
+    "requires_license": "animal_products",
+    "expiry_time": "1 month",
+    "requires_aisle": "refrigerator"
+  },
+  "soda": {
+    "requires_license": "none",
+    "expiry_time": "9 months",
+    "requires_aisle": "refrigerator"
+  }
+}
