@@ -1,21 +1,12 @@
 import javax.swing.*;
+import java.awt.*;
 
-public class Stocks {
-  public void initialize_page() {
-    // Create a new JFrame object
-    JFrame frame = new JFrame();
-
-    // Set the size of the JFrame
-    frame.setSize(1920, 1200);
+public class Stocks extends JPanel {
+  public Stocks() {
+    GridBagLayout layout = new GridBagLayout();
 
     // Set the layout of the JFrame
-    frame.setLayout(null);
-
-    // Set the visibility of the JFrame
-    frame.setVisible(true);
-
-    // Set the resizability of the JFrame
-    frame.setResizable(true);
+    setLayout(layout);
 
     String data[][] = { { "101", "Amit", "670000" },
         { "102", "Jai", "780000" },
@@ -25,8 +16,8 @@ public class Stocks {
 
     // Create a new JTable object
     JTable table = new JTable(data, column);
-    table.setBounds(0, 0, 1920, 1200);
 
-    frame.add(table);
+    add(table);
   }
+
 }
