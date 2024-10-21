@@ -87,7 +87,13 @@
   "ice_cream": {
     "requires_license": "frozen_food",
     "expiry_time": "6 months",
-    "requires_aisle": "freezer"
+    "requires_aisle": "freezer",
+    "preffered_season": "summer",
+    "non_preffered_season": "winter",
+    "min_price": 0.5,
+    "max_price": 2.5,
+    "preffered_season_price_increase_percentage": 30,
+    "non_preffered_season_price_decrease_percentage": 30
   },
   "rice": {
     "requires_license": "none",
