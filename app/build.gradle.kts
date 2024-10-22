@@ -34,5 +34,5 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "app.src.main.java.org.supermarkettycoon.Main"
+    mainClass = "org.supermarkettycoon.Main"
 }
