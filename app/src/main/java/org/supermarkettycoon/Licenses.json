@@ -1,0 +1,34 @@
+[
+  {
+    "license": "animal_products",
+    "full_name": "Animal Products"
+  },
+  {
+    "license": "bakery_products",
+    "full_name": "Bakery Products"
+  },
+  {
+    "license": "meat_products",
+    "full_name": "Meat Products"
+  },
+  {
+    "license": "none",
+    "full_name": "None"
+  },
+  {
+    "license": "seafood_products",
+    "full_name": "Seafood Products"
+  },
+  {
+    "license": "frozen_food",
+    "full_name": "Frozen Food"
+  },
+  {
+    "license": "alcohol",
+    "full_name": "Alcohol"
+  },
+  {
+    "license": "tobacco",
+    "full_name": "Tobacco"
+  }
+]
