@@ -9,7 +9,8 @@
     "min_price": 1,
     "max_price": 3,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Milk"
   },
   {
     "name": "bread",
@@ -21,7 +22,8 @@
     "min_price": 0.5,
     "max_price": 2,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Bread"
   },
   {
     "name": "eggs",
@@ -33,7 +35,8 @@
     "min_price": 2,
     "max_price": 5,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Eggs"
   },
   {
     "name": "chicken",
@@ -45,7 +48,8 @@
     "min_price": 7,
     "max_price": 12,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Chicken"
   },
   {
     "name": "apples",
@@ -57,7 +61,8 @@
     "min_price": 1,
     "max_price": 3,
     "preferred_season_price_increase_percentage": -25,
-    "non_preferred_season_price_decrease_percentage": -25
+    "non_preferred_season_price_decrease_percentage": -25,
+    "fullname": "Apples"
   },
   {
     "name": "cereal",
@@ -69,7 +74,8 @@
     "min_price": 2,
     "max_price": 6,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Cereal"
   },
   {
     "name": "butter",
@@ -81,7 +87,8 @@
     "min_price": 3,
     "max_price": 7,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Butter"
   },
   {
     "name": "orange_juice",
@@ -93,7 +100,8 @@
     "min_price": 1,
     "max_price": 3,
     "preferred_season_price_increase_percentage": 20,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Orange Juice"
   },
   {
     "name": "orange",
@@ -105,7 +113,8 @@
     "min_price": 2,
     "max_price": 4,
     "preferred_season_price_increase_percentage": 15,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Orange"
   },
   {
     "name": "pasta",
@@ -117,7 +126,8 @@
     "min_price": 1,
     "max_price": 2,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Pasta"
   },
   {
     "name": "tomato_sauce",
@@ -129,7 +139,8 @@
     "min_price": 2,
     "max_price": 4,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Tomato Sauce"
   },
   {
     "name": "fish",
@@ -141,7 +152,8 @@
     "min_price": 7,
     "max_price": 12,
     "preferred_season_price_increase_percentage": -20,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Fish"
   },
   {
     "name": "yogurt",
@@ -153,7 +165,8 @@
     "min_price": 4,
     "max_price": 8,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Yogurt"
   },
   {
     "name": "bananas",
@@ -165,7 +178,8 @@
     "min_price": 3,
     "max_price": 5,
     "preferred_season_price_increase_percentage": -10,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Bananas"
   },
   {
     "name": "potatoes",
@@ -177,7 +191,8 @@
     "min_price": 1,
     "max_price": 2,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Potatoes"
   },
   {
     "name": "toilet_paper",
@@ -189,7 +204,8 @@
     "min_price": 8,
     "max_price": 15,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Toilet Paper"
   },
   {
     "name": "shampoo",
@@ -201,7 +217,8 @@
     "min_price": 3,
     "max_price": 7,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Shampoo"
   },
   {
     "name": "frozen_pizza",
@@ -213,7 +230,8 @@
     "min_price": 5,
     "max_price": 10,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Frozen Pizza"
   },
   {
     "name": "ice_cream",
@@ -225,7 +243,8 @@
     "min_price": 0.5,
     "max_price": 2.5,
     "preferred_season_price_increase_percentage": 30,
-    "non_preferred_season_price_decrease_percentage": 30
+    "non_preferred_season_price_decrease_percentage": 30,
+    "fullname": "Ice Cream"
   },
   {
     "name": "rice",
@@ -237,7 +256,8 @@
     "min_price": 2,
     "max_price": 4,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Rice"
   },
   {
     "name": "olive_oil",
@@ -249,7 +269,8 @@
     "min_price": 5,
     "max_price": 8,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Olive Oil"
   },
   {
     "name": "chocolate",
@@ -261,7 +282,8 @@
     "min_price": 2,
     "max_price": 5,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Chocolate"
   },
   {
     "name": "canned_tuna",
@@ -273,7 +295,8 @@
     "min_price": 3,
     "max_price": 8,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Canned Tuna"
   },
   {
     "name": "cheese",
@@ -285,7 +308,8 @@
     "min_price": 4,
     "max_price": 9,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Cheese"
   },
   {
     "name": "soda",
@@ -297,7 +321,8 @@
     "min_price": 1,
     "max_price": 2.5,
     "preferred_season_price_increase_percentage": 15,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Soda"
   },
   {
     "name": "wine",
@@ -309,7 +334,8 @@
     "min_price": 5,
     "max_price": 10,
     "preferred_season_price_increase_percentage": 20,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Wine"
   },
   {
     "name": "whiskey",
@@ -321,7 +347,8 @@
     "min_price": 15,
     "max_price": 50,
     "preferred_season_price_increase_percentage": 25,
-    "non_preferred_season_price_decrease_percentage": 15
+    "non_preferred_season_price_decrease_percentage": 15,
+    "fullname": "Whiskey"
   },
   {
     "name": "beer",
@@ -333,7 +360,8 @@
     "min_price": 0.5,
     "max_price": 3,
     "preferred_season_price_increase_percentage": 10,
-    "non_preferred_season_price_decrease_percentage": 20
+    "non_preferred_season_price_decrease_percentage": 20,
+    "fullname": "Beer"
   },
   {
     "name": "cigarettes",
@@ -345,7 +373,8 @@
     "min_price": 5,
     "max_price": 15,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Cigarettes"
   },
   {
     "name": "dark_chocolate",
@@ -357,7 +386,8 @@
     "min_price": 2,
     "max_price": 10,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Dark Chocolate"
   },
   {
     "name": "menthol_cigarettes",
@@ -369,7 +399,8 @@
     "min_price": 7,
     "max_price": 15,
     "preferred_season_price_increase_percentage": 0,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Menthol Cigarettes"
   },
   {
     "name": "cigars",
@@ -381,7 +412,8 @@
     "min_price": 10,
     "max_price": 15,
     "preferred_season_price_increase_percentage": 10,
-    "non_preferred_season_price_decrease_percentage": 0
+    "non_preferred_season_price_decrease_percentage": 0,
+    "fullname": "Cigars"
   },
   {
     "name": "vodka",
@@ -393,7 +425,8 @@
     "min_price": 17,
     "max_price": 30,
     "preferred_season_price_increase_percentage": 15,
-    "non_preferred_season_price_decrease_percentage": 10
+    "non_preferred_season_price_decrease_percentage": 10,
+    "fullname": "Vodka"
   },
   {
     "name": "light_beer",
@@ -405,6 +438,7 @@
     "min_price": 1.5,
     "max_price": 4,
     "preferred_season_price_increase_percentage": 10,
-    "non_preferred_season_price_decrease_percentage": 20
+    "non_preferred_season_price_decrease_percentage": 20,
+    "fullname": "Light Beer"
   }
 ]
