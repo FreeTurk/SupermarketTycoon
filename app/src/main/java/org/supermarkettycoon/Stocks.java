@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Stocks extends JPanel {
-  public Stocks() {
+  public Stocks(Globals globals) {
+    System.out.println(globals.day);
     GridBagLayout layout = new GridBagLayout();
     GridBagConstraints c = new GridBagConstraints();
 
