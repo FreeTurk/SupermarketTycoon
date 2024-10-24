@@ -2,6 +2,7 @@ package org.supermarkettycoon;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 import com.google.gson.Gson;
 
@@ -9,11 +10,11 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class Upgrades extends JTabbedPane {
-  public Upgrades() {
+  public Upgrades(Globals globals) {
 
     JScrollPane licenses = new LicenseUpgrades();
     JScrollPane market = new MarketUpgrades();
-    JScrollPane products = new Products();
+    JScrollPane products = new Products(globals);
 
     addTab("Licenses", licenses);
     addTab("Upgrades", market);
@@ -92,7 +93,7 @@ class MarketUpgrades extends JScrollPane {
 }
 
 class Products extends JScrollPane {
-  Products() {
+  Products(Globals globals) {
     GridBagLayout layout = new GridBagLayout();
     layout.columnWeights = new double[] { 1f };
     JPanel innerPanel = new JPanel(layout);
@@ -112,8 +113,25 @@ class Products extends JScrollPane {
     TProduct[] products = gson.fromJson(productsJSONString, TProduct[].class);
 
     for (TProduct product : products) {
-      JButton button = new JButton(
-          "<html><center>" + product.fullname + "<br/>" + product.min_price + "$" + "</center></html>");
+      double min_price = product.min_price;
+      double max_price = product.max_price;
+
+      if (product.preferred_season.equals(globals.season())) {
+        min_price *= 1 + product.preferred_season_price_increase_percentage / 100;
+        max_price *= 1 + product.preferred_season_price_increase_percentage / 100;
+      }
+
+      if (product.non_preferred_season.equals(globals.season())) {
+        min_price *= 1 - product.non_preferred_season_price_decrease_percentage / 100;
+        max_price *= 1 - product.non_preferred_season_price_decrease_percentage / 100;
+      }
+
+      Random random = new Random();
+
+      double price = random.nextDouble() * (max_price - min_price) + min_price;
+
+      JButton button = new JButton(String.format(
+          "<html><center>%s<br/>%.2f$</center></html>", product.fullname, price));
       button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
       button.setFont(new Font("Arial", Font.PLAIN, 24));
       innerPanel.add(button, c);
