@@ -16,6 +16,11 @@ class Main extends JFrame {
 
     Globals globals = new Globals();
 
+    GameStartDialog gameStartDialog = new GameStartDialog(this, globals);
+
+    gameStartDialog.setVisible(true);
+    
+
     TopBar topBar = new TopBar(globals);
     Stocks stocks = new Stocks(globals);
     Upgrades upgrades = new Upgrades(globals);

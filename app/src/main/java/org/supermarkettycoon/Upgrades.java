@@ -135,6 +135,8 @@ class Products extends JScrollPane {
       button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
       button.setFont(new Font("Arial", Font.PLAIN, 24));
       innerPanel.add(button, c);
+
+      
     }
 
     setViewportView(innerPanel);

@@ -1,6 +1,6 @@
 package org.supermarkettycoon;
 
-public class Globals {
+public class Globals extends SaveFile {
   public int day = 1;
   public float money = 1000;
   public int power = 10;
