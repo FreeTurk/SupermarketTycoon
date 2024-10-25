@@ -17,10 +17,13 @@ public class Upgrades extends JTabbedPane {
 
     @Subscribe
     public void redoProductsPage(NewDayEvent nde) {
-        JScrollPane products = new Products(this.globals, eventBus);
-        removeTabAt(2);
-        addTab("Products", products);
-        setSelectedIndex(2);
+
+        if (globals.day % 10 == 0) {
+            JScrollPane products = new Products(this.globals, eventBus);
+            removeTabAt(2);
+            addTab("Products", products);
+            setSelectedIndex(2);
+        }
     }
 
     public Upgrades(Globals globals, EventBus eventBus) {
