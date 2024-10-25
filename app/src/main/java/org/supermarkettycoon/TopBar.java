@@ -50,6 +50,7 @@ public class TopBar extends JPanel {
                 throw new RuntimeException(ex);
             }
             eventBus.post(globals);
+            eventBus.post(new NewDayEvent());
         });
 
 

@@ -87,7 +87,9 @@ class NewGameDialog extends JDialog {
 
         createGameButton.addActionListener((e) -> {
             try {
-                globals.createGame(nameField.getText());
+                globals.createGame(nameField.getText(), globals);
+                dispose();
+                parent.dispose();
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

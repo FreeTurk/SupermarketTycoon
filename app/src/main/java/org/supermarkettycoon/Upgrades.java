@@ -13,15 +13,19 @@ import java.util.Scanner;
 
 public class Upgrades extends JTabbedPane {
     EventBus eventBus;
+    Globals globals;
 
     @Subscribe
-    public void setOrUpdateUpgradesPane(Globals globals) {
-        Component currentTab = getSelectedComponent();
-        currentTab.repaint();
+    public void redoProductsPage(NewDayEvent nde) {
+        JScrollPane products = new Products(this.globals, eventBus);
+        removeTabAt(2);
+        addTab("Products", products);
+        setSelectedIndex(2);
     }
 
     public Upgrades(Globals globals, EventBus eventBus) {
         this.eventBus = eventBus;
+        this.globals = globals;
 
         JScrollPane licenses = new LicenseUpgrades(globals, eventBus);
         JScrollPane market = new MarketUpgrades(globals, eventBus);
@@ -61,6 +65,10 @@ class LicenseUpgrades extends JScrollPane {
             button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
             button.setFont(new Font("Arial", Font.PLAIN, 24));
 
+            if (globals.licenses.contains(license)) {
+                button.setEnabled(false);
+            }
+
             button.addActionListener(e -> {
                 globals.licenses.add(license);
                 globals.power--;
@@ -69,10 +77,6 @@ class LicenseUpgrades extends JScrollPane {
 
                 eventBus.post(globals);
             });
-
-            if (globals.licenses.contains(license)) {
-                button.setEnabled(false);
-            }
 
 
             innerPanel.add(button, c);
@@ -197,10 +201,21 @@ class Products extends JScrollPane {
 
 
             button.addActionListener(e -> {
-                globals.products.add(boughtProduct);
+                boolean isUnique = false;
+
+                for (int i = 0; i < globals.products.size(); i++) {
+                    if (globals.products.get(i).isTwoProductsEqual(boughtProduct)) {
+                        globals.products.get(i).quantity = globals.products.get(i).quantity + 1;
+                        isUnique = true;
+                        break;
+                    }
+                }
+
+                if (!isUnique) {
+                    globals.products.add(boughtProduct);
+                }
+
                 globals.power--;
-                globals.money -= price;
-                button.setEnabled(false);
 
                 eventBus.post(globals);
             });

@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class SaveFile extends TSaveFile {
 
-    public void createGame(String username) throws java.io.IOException {
+    public void createGame(String username, Globals globals) throws java.io.IOException {
         File rootFolder = new File(System.getProperty("user.home") + "/.smtycoon");
 
         if (!rootFolder.exists()) {
@@ -47,6 +47,10 @@ public class SaveFile extends TSaveFile {
         FileWriter writer = new FileWriter(savefile.getPath());
         writer.write(json);
         writer.close();
+
+
+        loadGame(globals, savefile);
+
     }
 
     public void saveGame(Globals globals) throws java.io.IOException {

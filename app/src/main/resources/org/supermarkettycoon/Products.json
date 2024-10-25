@@ -2,7 +2,7 @@
   {
     "name": "milk",
     "requires_license": "animal_products",
-    "expiry_time": "14",
+    "expiry_time": 14,
     "requires_aisle": "refrigerator",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -15,7 +15,7 @@
   {
     "name": "bread",
     "requires_license": "bakery_products",
-    "expiry_time": "7",
+    "expiry_time": 7,
     "requires_aisle": "bakery",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -28,7 +28,7 @@
   {
     "name": "eggs",
     "requires_license": "animal_products",
-    "expiry_time": "21",
+    "expiry_time": 21,
     "requires_aisle": "refrigerator",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -41,7 +41,7 @@
   {
     "name": "chicken",
     "requires_license": "meat_products",
-    "expiry_time": "5",
+    "expiry_time": 5,
     "requires_aisle": "butchery",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -54,7 +54,7 @@
   {
     "name": "apples",
     "requires_license": "none",
-    "expiry_time": "28",
+    "expiry_time": 28,
     "requires_aisle": "grocery",
     "preferred_season": "Summer",
     "non_preferred_season": "Winter",
@@ -67,7 +67,7 @@
   {
     "name": "cereal",
     "requires_license": "none",
-    "expiry_time": "180",
+    "expiry_time": 180,
     "requires_aisle": "none",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -80,7 +80,7 @@
   {
     "name": "butter",
     "requires_license": "animal_products",
-    "expiry_time": "21",
+    "expiry_time": 21,
     "requires_aisle": "refrigerator",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -93,7 +93,7 @@
   {
     "name": "orange_juice",
     "requires_license": "none",
-    "expiry_time": "14",
+    "expiry_time": 14,
     "requires_aisle": "refrigerator",
     "preferred_season": "Summer",
     "non_preferred_season": "none",
@@ -106,7 +106,7 @@
   {
     "name": "orange",
     "requires_license": "none",
-    "expiry_time": "14",
+    "expiry_time": 14,
     "requires_aisle": "grocery",
     "preferred_season": "Winter",
     "non_preferred_season": "none",
@@ -119,7 +119,7 @@
   {
     "name": "pasta",
     "requires_license": "none",
-    "expiry_time": "365",
+    "expiry_time": 365,
     "requires_aisle": "none",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -132,7 +132,7 @@
   {
     "name": "tomato_sauce",
     "requires_license": "none",
-    "expiry_time": "540",
+    "expiry_time": 540,
     "requires_aisle": "none",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -145,7 +145,7 @@
   {
     "name": "fish",
     "requires_license": "seafood_products",
-    "expiry_time": "3",
+    "expiry_time": 3,
     "requires_aisle": "seafood_section",
     "preferred_season": "Winter",
     "non_preferred_season": "Summer",
@@ -158,7 +158,7 @@
   {
     "name": "yogurt",
     "requires_license": "animal_products",
-    "expiry_time": "14",
+    "expiry_time": 14,
     "requires_aisle": "refrigerator",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -171,7 +171,7 @@
   {
     "name": "bananas",
     "requires_license": "none",
-    "expiry_time": "7",
+    "expiry_time": 7,
     "requires_aisle": "grocery",
     "preferred_season": "Summer",
     "non_preferred_season": "none",
@@ -184,7 +184,7 @@
   {
     "name": "potatoes",
     "requires_license": "none",
-    "expiry_time": "60",
+    "expiry_time": 60,
     "requires_aisle": "grocery",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -197,7 +197,7 @@
   {
     "name": "toilet_paper",
     "requires_license": "none",
-    "expiry_time": "none",
+    "expiry_time": 9999,
     "requires_aisle": "household",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -210,7 +210,7 @@
   {
     "name": "shampoo",
     "requires_license": "none",
-    "expiry_time": "730",
+    "expiry_time": 730,
     "requires_aisle": "household",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -223,7 +223,7 @@
   {
     "name": "frozen_pizza",
     "requires_license": "frozen_food",
-    "expiry_time": "180",
+    "expiry_time": 180,
     "requires_aisle": "freezer",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -236,7 +236,7 @@
   {
     "name": "ice_cream",
     "requires_license": "frozen_food",
-    "expiry_time": "180",
+    "expiry_time": 180,
     "requires_aisle": "freezer",
     "preferred_season": "Summer",
     "non_preferred_season": "Winter",
@@ -249,7 +249,7 @@
   {
     "name": "rice",
     "requires_license": "none",
-    "expiry_time": "365",
+    "expiry_time": 365,
     "requires_aisle": "none",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -262,7 +262,7 @@
   {
     "name": "olive_oil",
     "requires_license": "none",
-    "expiry_time": "365",
+    "expiry_time": 365,
     "requires_aisle": "none",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -275,7 +275,7 @@
   {
     "name": "chocolate",
     "requires_license": "none",
-    "expiry_time": "365",
+    "expiry_time": 365,
     "requires_aisle": "none",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -288,7 +288,7 @@
   {
     "name": "canned_tuna",
     "requires_license": "none",
-    "expiry_time": "730",
+    "expiry_time": 730,
     "requires_aisle": "none",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -301,7 +301,7 @@
   {
     "name": "cheese",
     "requires_license": "animal_products",
-    "expiry_time": "30",
+    "expiry_time": 30,
     "requires_aisle": "refrigerator",
     "preferred_season": "none",
     "non_preferred_season": "none",
@@ -314,7 +314,7 @@
   {
     "name": "soda",
     "requires_license": "none",
-    "expiry_time": "270",
+    "expiry_time": 270,
     "requires_aisle": "refrigerator",
     "preferred_season": "Summer",
     "non_preferred_season": "none",

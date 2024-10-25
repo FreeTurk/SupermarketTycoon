@@ -1,36 +1,36 @@
 [
   {
-    "license": "animal_products",
+    "name": "animal_products",
     "fullname": "Animal Products",
     "price": 500
   },
   {
-    "license": "bakery_products",
+    "name": "bakery_products",
     "fullname": "Bakery Products",
     "price": 300
   },
   {
-    "license": "meat_products",
+    "name": "meat_products",
     "fullname": "Meat Products",
     "price": 700
   },
   {
-    "license": "seafood_products",
+    "name": "seafood_products",
     "fullname": "Seafood Products",
     "price": 600
   },
   {
-    "license": "frozen_food",
+    "name": "frozen_food",
     "fullname": "Frozen Food",
     "price": 400
   },
   {
-    "license": "alcohol",
+    "name": "alcohol",
     "fullname": "Alcohol",
     "price": 1000
   },
   {
-    "license": "tobacco",
+    "name": "tobacco",
     "fullname": "Tobacco",
     "price": 1200
   }
