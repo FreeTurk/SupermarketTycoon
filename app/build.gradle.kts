@@ -23,6 +23,7 @@ dependencies {
     implementation(libs.guava)
 
     implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.google.guava:guava:33.3.1-jre")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

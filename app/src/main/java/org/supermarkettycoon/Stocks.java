@@ -1,29 +1,34 @@
 package org.supermarkettycoon;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Stocks extends JPanel {
-  public Stocks(Globals globals) {
-    System.out.println(globals.day);
-    GridBagLayout layout = new GridBagLayout();
-    GridBagConstraints c = new GridBagConstraints();
+    public Stocks(Globals globals) {
+        System.out.println(globals.day);
+        GridBagLayout layout = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
 
-    setBackground(Color.RED);
+        setBackground(Color.RED);
 
-    // Set the layout of the JFrame
-    setLayout(layout);
-    String data[][] = { { "101", "Amit", "670000" },
-        { "102", "Jai", "780000" },
-        { "101", "Sachin", "700000" } };
+        // Set the layout of the JFrame
+        setLayout(layout);
 
-    String column[] = { "ID", "NAME", "SALARY" };
+        TableModel tableModel = new DefaultTableModel() {
 
-    // Create a new JTable object
-    JTable table = new JTable(data, column);
+        };
 
-    c.weightx = c.weighty = 1;
-    add(table, c);
-  }
+        String column[] = {"Name", "Time Left", "Sell Price"};
+
+        // Create a new JTable object
+        JTable table = new JTable(data, column);
+
+
+        c.weightx = c.weighty = 1;
+        add(table, c);
+    }
 
 }

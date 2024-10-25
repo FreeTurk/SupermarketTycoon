@@ -1,9 +1,13 @@
 package org.supermarkettycoon;
 
+import com.google.gson.Gson;
+
 import javax.swing.*;
 
 import java.awt.event.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
 
 public class GameStartDialog extends JDialog {
     public GameStartDialog(JFrame parent, Globals globals) {
@@ -40,7 +44,7 @@ public class GameStartDialog extends JDialog {
         newGameButton.setAlignmentY(Component.CENTER_ALIGNMENT);
 
         newGameButton.addActionListener(e -> {
-           JDialog newGameDialog = new NewGameDialog(this, globals);
+            JDialog newGameDialog = new NewGameDialog(this, globals);
         });
 
         add(newGameButton, c);
@@ -48,13 +52,18 @@ public class GameStartDialog extends JDialog {
         JButton loadButton = new JButton("Load Game");
         loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         loadButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+        loadButton.addActionListener(e -> {
+            JDialog loadGameDialog = new LoadGameDialog(this, globals);
+        });
+
         add(loadButton, c);
 
     }
 }
 
 class NewGameDialog extends JDialog {
-    public NewGameDialog(JDialog parent, Globals globals)  {
+    public NewGameDialog(JDialog parent, Globals globals) {
         super(parent, "New Game", true);
         setSize(800, 600);
         setLocationRelativeTo(parent);
@@ -76,7 +85,7 @@ class NewGameDialog extends JDialog {
 
         JButton createGameButton = new JButton("Create Game");
 
-        createGameButton.addActionListener((e)  -> {
+        createGameButton.addActionListener((e) -> {
             try {
                 globals.createGame(nameField.getText());
             } catch (Exception ex) {
@@ -88,4 +97,45 @@ class NewGameDialog extends JDialog {
         setVisible(true);
     }
 
+}
+
+class LoadGameDialog extends JDialog {
+    LoadGameDialog(JDialog parent, Globals globals) {
+        super(parent, "Load Game", true);
+        setSize(800, 600);
+        setLocationRelativeTo(parent);
+
+
+        GridBagLayout layout = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+
+        setLayout(layout);
+
+        c.gridx = 1;
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5, 5, 5, 5);
+
+        File saveFileDir = new File(System.getProperty("user.home") + "/.smtycoon");
+        File[] allSaveFiles = saveFileDir.listFiles();
+
+        for (File saveFile : allSaveFiles) {
+            JButton loadButton = new JButton(saveFile.getName().split(".json")[0]);
+
+            loadButton.addActionListener(e -> {
+                try {
+                    globals.loadGame(globals, saveFile);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                dispose();
+                parent.dispose();
+            });
+
+            add(loadButton, c);
+        }
+
+        setVisible(true);
+
+    }
 }
