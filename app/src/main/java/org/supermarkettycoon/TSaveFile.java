@@ -7,6 +7,7 @@ import java.util.List;
 class TBoughtProducts extends TProduct {
     public int quantity;
     public double price;
+    public double originalPrice;
     public int buydate;
 
     public boolean isTwoProductsEqual(TBoughtProducts product) {

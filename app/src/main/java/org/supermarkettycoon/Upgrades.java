@@ -190,6 +190,7 @@ class Products extends JScrollPane {
             boughtProduct.fullname = product.fullname;
             boughtProduct.quantity = 1;
             boughtProduct.price = price;
+            boughtProduct.originalPrice = price;
             boughtProduct.min_price = min_price;
             boughtProduct.max_price = max_price;
             boughtProduct.preferred_season = product.preferred_season;
