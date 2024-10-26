@@ -8,14 +8,17 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 public class Stocks extends JPanel {
     JTable table;
     DefaultTableModel model;
     String[] columns = {"Amount", "Name", "Time Left", "Sell Price"};
+    Globals globals;
 
 
     public Stocks(Globals globals) {
+        globals = globals;
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
 
@@ -101,6 +104,27 @@ public class Stocks extends JPanel {
         updateTable(globals);
 
         this.model.fireTableDataChanged();
+    }
+
+    @Subscribe
+    public void dailyProductSellUpdate(NewDayEvent nde) {
+        for (int i = 0; i < globals.products.size(); i++) {
+            TBoughtProducts product = globals.products.get(i);
+            Random random = new Random();
+
+            int leftDayForProd = product.expiry_time - (globals.day - product.buydate);
+            int maxCustomers = (int) (Math.round(((double) product.quantity / leftDayForProd))
+                    * (product.originalPrice / product.price));
+            int sellAmount = random.nextInt(0, maxCustomers + 1);
+
+            globals.money += product.price * sellAmount;
+
+            if (sellAmount >= product.quantity) {
+                globals.products.remove(product);
+            } else {
+                globals.products.get(i).quantity -= sellAmount;
+            }
+        }
     }
 
 }

@@ -17,6 +17,13 @@ public class Upgrades extends JTabbedPane {
 
     @Subscribe
     public void redoProductsPage(NewDayEvent nde) {
+        // Remove any old products.
+        globals.products.forEach(product -> {
+            if (product.expiry_time == globals.day - product.buydate) {
+                globals.products.remove(product);
+            }
+        });
+
 
         if (globals.day % 10 == 0) {
             JScrollPane products = new Products(this.globals, eventBus);
@@ -56,6 +63,7 @@ class LicenseUpgrades extends JScrollPane {
         innerPanel.setLayout(layout);
 
         InputStream licensesJSONStream = getClass().getResourceAsStream("Licenses.json");
+        assert licensesJSONStream != null;
         Scanner licensesJSONScanner = new Scanner(licensesJSONStream).useDelimiter("\\A");
         String licensesJSONString = licensesJSONScanner.hasNext() ? licensesJSONScanner.next() : "";
 
@@ -66,7 +74,13 @@ class LicenseUpgrades extends JScrollPane {
             JButton button = new JButton(
                     "<html><center>" + license.fullname + " License" + "<br/>" + license.price + "$" + "</center></html>");
             button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
-            button.setFont(new Font("Arial", Font.PLAIN, 24));
+
+            if (license.price <= globals.money || globals.power <= 0) {
+                button.setForeground(Color.red);
+                button.setEnabled(false);
+            }
+
+            button.setFont(new Font("Arial", Font.PLAIN, 18));
 
             if (globals.licenses.contains(license)) {
                 button.setEnabled(false);
@@ -107,6 +121,7 @@ class MarketUpgrades extends JScrollPane {
         innerPanel.setLayout(layout);
 
         InputStream upgradesJSONStream = getClass().getResourceAsStream("Upgrades.json");
+        assert upgradesJSONStream != null;
         Scanner upgradesJSONScanner = new Scanner(upgradesJSONStream).useDelimiter("\\A");
         String upgradesJSONString = upgradesJSONScanner.hasNext() ? upgradesJSONScanner.next() : "";
 
@@ -117,7 +132,12 @@ class MarketUpgrades extends JScrollPane {
             JButton button = new JButton(
                     "<html><center>" + upgrade.fullname + "<br/>" + upgrade.price + "$" + "</center></html>");
             button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
-            button.setFont(new Font("Arial", Font.PLAIN, 24));
+            if (upgrade.price <= globals.money || globals.power <= 0) {
+                button.setForeground(Color.red);
+                button.setEnabled(false);
+            }
+
+            button.setFont(new Font("Arial", Font.PLAIN, 18));
 
 
             button.addActionListener(e -> {
@@ -155,6 +175,7 @@ class Products extends JScrollPane {
         innerPanel.setLayout(layout);
 
         InputStream productsJSONStream = getClass().getResourceAsStream("Products.json");
+        assert productsJSONStream != null;
         Scanner productsJSONScanner = new Scanner(productsJSONStream).useDelimiter("\\A");
         String productsJSONString = productsJSONScanner.hasNext() ? productsJSONScanner.next() : "";
 
@@ -182,7 +203,13 @@ class Products extends JScrollPane {
             JButton button = new JButton(String.format(
                     "<html><center>%s<br/>%.2f$</center></html>", product.fullname, price));
             button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
-            button.setFont(new Font("Arial", Font.PLAIN, 24));
+
+            if (price <= globals.money || globals.power <= 0) {
+                button.setForeground(Color.red);
+                button.setEnabled(false);
+            }
+
+            button.setFont(new Font("Arial", Font.PLAIN, 18));
             innerPanel.add(button, c);
 
             // Reflects the product listing to the TBoughtProducts interface to be saved
