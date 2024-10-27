@@ -1,5 +1,7 @@
 package org.supermarkettycoon;
 
+import com.google.common.eventbus.EventBus;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,11 +17,25 @@ class Main extends JFrame {
         layout.rowHeights = new int[]{50, 0};
 
         Globals globals = new Globals();
+        EventBus eventBus = EventBusFactory.getEventBus();
 
-        TopBar topBar = new TopBar(globals);
+
+        GameStartDialog gameStartDialog = new GameStartDialog(this, globals);
+
+        gameStartDialog.setVisible(true);
+
+
+        setTitle(String.format("Supermarket Tycoon (%s)", globals.username));
+
+        TopBar topBar = new TopBar(globals, eventBus);
+        eventBus.register(topBar);
         Stocks stocks = new Stocks(globals);
-        Upgrades upgrades = new Upgrades();
-        SpriteScreen spriteScreen = new SpriteScreen(globals);
+        eventBus.register(stocks);
+        Upgrades upgrades = new Upgrades(globals, eventBus);
+        eventBus.register(upgrades);
+
+
+        SpriteScreen spriteScreen = new SpriteScreen();
         GridBagConstraints c = new GridBagConstraints();
 
         // Sets the layout of the main window

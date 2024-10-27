@@ -4,37 +4,67 @@ import javax.swing.*;
 
 import java.awt.*;
 
+import com.google.common.eventbus.Subscribe;
+import com.google.common.eventbus.EventBus;
+
 public class TopBar extends JPanel {
-  TopBar(Globals globals) {
-    GridBagLayout layout = new GridBagLayout();
-    GridBagConstraints c = new GridBagConstraints();
-    layout.columnWeights = new double[] { 1f, 1f, 1f, 1f };
+    JLabel moneyLabel;
+    JLabel dayLabel;
+    JLabel energyLabel;
+    Globals globals;
 
-    c.insets = new Insets(0, 20, 0, 20);
 
-    setLayout(layout);
+    TopBar(Globals globals, EventBus eventBus) {
+        this.globals = globals;
+        GridBagLayout layout = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        layout.columnWeights = new double[]{1f, 1f, 1f, 1f};
 
-    c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(0, 20, 0, 20);
 
-    JLabel moneyLabel = new JLabel(String.format("Money %.2f$", globals.money));
+        setLayout(layout);
 
-    add(moneyLabel, c);
+        c.fill = GridBagConstraints.BOTH;
 
-    JLabel dayLabel = new JLabel(String.format("Day %d (%s)", globals.day, globals.season()));
+        moneyLabel = new JLabel(String.format("Money %.2f$", globals.money));
 
-    add(dayLabel, c);
+        add(moneyLabel, c);
 
-    JLabel energyLabel = new JLabel(String.format("Energy %d", globals.power));
+        dayLabel = new JLabel(String.format("Day %d (%s)", globals.day, globals.season()));
 
-    add(energyLabel, c);
+        add(dayLabel, c);
 
-    JButton nextDay = new JButton("Next Day");
+        energyLabel = new JLabel(String.format("Energy %d", globals.power));
 
-    nextDay.addActionListener(e -> {
-      globals.day++;
-      dayLabel.setText(String.format("Day %d (%s)", globals.day, globals.season()));
-    });
+        add(energyLabel, c);
 
-    add(nextDay, c);
-  }
+        JButton nextDay = new JButton("Next Day");
+
+        nextDay.addActionListener(e -> {
+            globals.day++;
+            globals.power = 10;
+
+            try {
+                globals.saveGame(globals);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            eventBus.post(globals);
+            eventBus.post(new NewDayEvent());
+        });
+
+
+        add(nextDay, c);
+
+    }
+
+
+    @Subscribe
+    public void updateTopBarOnGlobalUpdate(Globals globals) {
+        moneyLabel.setText(String.format("Money %.2f$", globals.money));
+        dayLabel.setText(String.format("Day %d (%s)", globals.day, globals.season()));
+        energyLabel.setText(String.format("Energy %d", globals.power));
+    }
+
+
 }
