@@ -26,8 +26,7 @@ Run the game:
 gradle run
 ```
 
-**Build File**
-   Build file is located in
+**Build File** is located in
    ```sh
    app/build/libs
    ```
@@ -121,6 +120,6 @@ A well-designed UX is essential for maintaining player interest, reducing the le
 
 ## Contact
 
-For any inquiries or feedback, please contact us at [h.m.celik@student.tue.nl](mailto:h.m.celik@student.tue.nl) or [e.oven@student.tue.nl](mailto:e.oven@student.tue.nl) or.
+For any inquiries or feedback, please contact us at [h.m.celik@student.tue.nl](mailto:h.m.celik@student.tue.nl) or [e.oven@student.tue.nl](mailto:e.oven@student.tue.nl) .
 
 Enjoy managing your supermarket!
