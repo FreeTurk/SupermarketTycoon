@@ -59,7 +59,6 @@ class Main extends JFrame {
 
         c.gridheight = 1;
         c.gridwidth = 1;
-        c.gridheight = 1;
         c.gridx = 1;
         c.gridy = 1;
         add(spriteScreen, c);
