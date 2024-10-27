@@ -17,6 +17,7 @@ public class Stocks extends JPanel {
     JTable table;
     DefaultTableModel model;
     String[] columns = {"Amount", "Name", "Time Left", "Sell Price"};
+<<<<<<< HEAD
     Globals _globals;
     EventBus _eventBus;
 
@@ -24,6 +25,21 @@ public class Stocks extends JPanel {
     public Stocks(Globals globals, EventBus eventBus) {
         _globals = globals;
         _eventBus = eventBus;
+=======
+<<<<<<< Updated upstream
+    Globals _globals;
+
+
+    public Stocks(Globals globals) {
+        _globals = globals;
+=======
+    Globals globals;
+
+
+    public Stocks(Globals globals) {
+        globals = globals;
+>>>>>>> Stashed changes
+>>>>>>> origin/frontend
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
 
@@ -53,15 +69,25 @@ public class Stocks extends JPanel {
                 double newPriceFormatted = Double.parseDouble(formatter.format(Double.valueOf((String) newValue)));
 
 
+<<<<<<< Updated upstream
+                for (int i = 0; i < _globals.products.size(); i++) {
+                    TBoughtProducts product = _globals.products.get(i);
+                    Integer expiryDate = timeLeft + (_globals.day - product.buydate);
+=======
                 for (int i = 0; i < globals.products.size(); i++) {
                     TBoughtProducts product = globals.products.get(i);
                     Integer expiryDate = timeLeft + (globals.day - product.buydate);
+>>>>>>> Stashed changes
 
                     if (oldPrice.equals(product.price) &&
                             product.name.equals(name) &&
                             amount.equals(product.quantity) &&
                             expiryDate.equals(product.expiry_time)) {
+<<<<<<< Updated upstream
+                        _globals.products.get(i).price = Double.parseDouble((String) newValue);
+=======
                         globals.products.get(i).price = Double.parseDouble((String) newValue);
+>>>>>>> Stashed changes
                     }
                 }
 
@@ -123,5 +149,45 @@ public class Stocks extends JPanel {
         _eventBus.post(globals.globals);
     }
 
+<<<<<<< HEAD
+=======
+    @Subscribe
+    public void dailyProductSellUpdate(NewDayEvent nde) {
+<<<<<<< Updated upstream
+        for (int i = 0; i < _globals.products.size(); i++) {
+            TBoughtProducts product = _globals.products.get(i);
+            Random random = new Random();
+
+            int leftDayForProd = product.expiry_time - (_globals.day - product.buydate);
+=======
+        for (int i = 0; i < globals.products.size(); i++) {
+            TBoughtProducts product = globals.products.get(i);
+            Random random = new Random();
+
+            int leftDayForProd = product.expiry_time - (globals.day - product.buydate);
+>>>>>>> Stashed changes
+            int maxCustomers = (int) (Math.round(((double) product.quantity / leftDayForProd))
+                    * (product.originalPrice / product.price));
+            int sellAmount = random.nextInt(0, maxCustomers + 1);
+
+<<<<<<< Updated upstream
+            _globals.money += product.price * sellAmount;
+
+            if (sellAmount >= product.quantity) {
+                _globals.products.remove(product);
+            } else {
+                _globals.products.get(i).quantity -= sellAmount;
+=======
+            globals.money += product.price * sellAmount;
+
+            if (sellAmount >= product.quantity) {
+                globals.products.remove(product);
+            } else {
+                globals.products.get(i).quantity -= sellAmount;
+>>>>>>> Stashed changes
+            }
+        }
+    }
+>>>>>>> origin/frontend
 
 }

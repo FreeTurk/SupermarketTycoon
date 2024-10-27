@@ -36,7 +36,10 @@ class Main extends JFrame {
 
 
         SpriteScreen spriteScreen = new SpriteScreen(globals);
+<<<<<<< HEAD
         eventBus.register(spriteScreen);
+=======
+>>>>>>> origin/frontend
         GridBagConstraints c = new GridBagConstraints();
 
         // Sets the layout of the main window
