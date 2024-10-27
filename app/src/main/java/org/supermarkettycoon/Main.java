@@ -35,7 +35,11 @@ class Main extends JFrame {
         eventBus.register(upgrades);
 
 
+<<<<<<< Updated upstream
         SpriteScreen spriteScreen = new SpriteScreen();
+=======
+        SpriteScreen spriteScreen = new SpriteScreen(globals);
+>>>>>>> Stashed changes
         GridBagConstraints c = new GridBagConstraints();
 
         // Sets the layout of the main window
@@ -59,7 +63,6 @@ class Main extends JFrame {
 
         c.gridheight = 1;
         c.gridwidth = 1;
-        c.gridheight = 1;
         c.gridx = 1;
         c.gridy = 1;
         add(spriteScreen, c);
