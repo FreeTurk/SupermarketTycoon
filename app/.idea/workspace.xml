@@ -5,42 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c974a772-106f-484c-9c28-0b6a867353a1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.gradle/8.10.2/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/8.10.2/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/RedrawTableEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/8.10.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/8.10.2/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/8.10.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/8.10.2/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/SpriteScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/SpriteScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Stocks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Stocks.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/TopBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/TopBar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Alcohol.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Animal_products.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Bakery.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Basket.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Butchery.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Cart.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Character-1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Character-2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Energy-1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Energy-2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Freezer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Frozen_food.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Grocery.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Household.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Meat_products.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Money.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Refrigerator.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Seafood_products.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/Tobacco.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/supermarkettycoon/assets/pixil-frame-0 (1).png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,33 +85,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Run.executor": "Run",
-    "Gradle.WinRun.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "frontend",
-    "go.import.settings.migrated": "true",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "//wsl.localhost/Ubuntu-24.04/home/emiroven/supermarket-tycoon",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
-    "org.rust.first.attach.projects": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Run.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.WinRun.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;frontend&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;//wsl.localhost/Ubuntu-24.04/home/emiroven/supermarket-tycoon&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="\\wsl.localhost\Ubuntu-24.04\home\emiroven\supermarket-tycoon\app\src\main\resources\org\supermarkettycoon" />
@@ -314,6 +291,17 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
   </component>
@@ -322,32 +310,17 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java</url>
-          <line>122</line>
+          <line>149</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java</url>
-          <line>214</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java</url>
-          <line>319</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Stocks.java</url>
-          <line>23</line>
+          <line>24</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java</url>
-          <line>78</line>
+          <line>105</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">

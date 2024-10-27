@@ -15,8 +15,8 @@ public class TopBar extends JPanel {
     Globals globals;
 
 
-    TopBar(Globals globals, EventBus eventBus) {
-        this.globals = globals;
+    TopBar(Globals _globals, EventBus eventBus) {
+        this.globals = _globals;
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
         layout.columnWeights = new double[]{1f, 1f, 1f, 1f};
@@ -45,39 +45,10 @@ public class TopBar extends JPanel {
             globals.day++;
             globals.power = 10;
 
-            int totalCustomers = 0;
-
-            int maxIndex = globals.products.size();
-
-            for (int i = 0; i < maxIndex; i++) {
-                TBoughtProducts product = globals.products.get(i);
-                Random random = new Random();
-
-                int maxCustomers = (int) Math.round(((double) globals.day / 10) * (product.originalPrice / product.price));
-                int sellAmount = random.nextInt(0, maxCustomers + 1);
-
-                globals.money += product.price * sellAmount;
-
-                if (sellAmount >= product.quantity) {
-                    sellAmount = product.quantity;
-                }
-
-                globals.products.get(i).quantity -= sellAmount;
-                totalCustomers += sellAmount;
-                sellAmount = 0;
-            }
-
-
+            
             eventBus.post(new NewDayEvent());
             eventBus.post(globals);
 
-            System.out.printf("Customers today %d%n", totalCustomers);
-
-            RedrawSpriteEvent rse = new RedrawSpriteEvent();
-            rse.customerNumber = totalCustomers;
-            eventBus.post(rse);
-
-            rse = new RedrawSpriteEvent();
             try {
                 globals.saveGame(globals);
             } catch (Exception ex) {
@@ -92,7 +63,7 @@ public class TopBar extends JPanel {
 
 
     @Subscribe
-    public void updateTopBarOnGlobalUpdate(Globals globals) {
+    public void updateTopBarOnGlobalUpdate(NewDayEvent nde) {
         moneyLabel.setText(String.format("Money %.2f$", globals.money));
         dayLabel.setText(String.format("Day %d (%s)", globals.day, globals.season()));
         energyLabel.setText(String.format("Energy %d", globals.power));

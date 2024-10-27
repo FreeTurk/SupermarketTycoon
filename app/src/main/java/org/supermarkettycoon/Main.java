@@ -35,16 +35,8 @@ class Main extends JFrame {
         eventBus.register(upgrades);
 
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        SpriteScreen spriteScreen = new SpriteScreen();
-=======
-        SpriteScreen spriteScreen = new SpriteScreen(globals);
->>>>>>> Stashed changes
-=======
         SpriteScreen spriteScreen = new SpriteScreen(globals);
         eventBus.register(spriteScreen);
->>>>>>> Stashed changes
         GridBagConstraints c = new GridBagConstraints();
 
         // Sets the layout of the main window

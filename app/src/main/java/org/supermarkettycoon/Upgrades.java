@@ -2,17 +2,13 @@ package org.supermarkettycoon;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 class StoredButtons {
     ArrayList<TBoughtProducts> buttons = new ArrayList<TBoughtProducts>();
@@ -23,44 +19,75 @@ public class Upgrades extends JTabbedPane {
     Globals globals;
     StoredButtons storedButtons = new StoredButtons();
 
+    boolean isRedone = false;
+
+
     @Subscribe
-    public void redoProductsPage(NewDayEvent nde) {
-        // Remove any old products.
-        globals.products.forEach(product -> {
-            if (product.expiry_time == globals.day - product.buydate || product.quantity <= 1) {
-                globals.products.remove(product);
+    public void newDay(NewDayEvent event) {
+        SwingUtilities.invokeLater(() -> {
+            if (globals.day % 10 == 0) {
+                SwingUtilities.invokeLater(() -> {
+                    // Find and remove the "Products" tab if it exists
+                    int productsTabIndex = -1;
+                    for (int i = 0; i < getTabCount(); i++) {
+                        if ("Products".equals(getTitleAt(i))) {
+                            productsTabIndex = i;
+                            break;
+                        }
+                    }
+                    if (productsTabIndex != -1) {
+                        removeTabAt(productsTabIndex);
+                    }
+
+                    // Add the new "Products" tab
+                    JScrollPane products = new Products(globals, eventBus, true, storedButtons);
+                    addTab("Products", products);
+
+                    // Update selected index if necessary
+                    int currentIndex = getSelectedIndex();
+                    int tabCount = getTabCount();
+                    if (currentIndex >= tabCount) {
+                        currentIndex = tabCount - 1;
+                    }
+                    setSelectedIndex(currentIndex);
+                });
             }
+
+            eventBus.post(globals);
+            eventBus.post(new RedrawTableEvent(globals));
         });
-
-
-        if (globals.day % 10 == 0) {
-            JScrollPane products = new Products(this.globals, eventBus, true, storedButtons);
-            removeTabAt(2);
-            addTab("Products", products);
-            setSelectedIndex(2);
-        }
     }
 
     @Subscribe
-    public void redoEverything(Globals globals) {
-        JScrollPane licenses = new LicenseUpgrades(globals, eventBus);
-        JScrollPane market = new MarketUpgrades(globals, eventBus);
-        JScrollPane products = new Products(globals, eventBus, false, storedButtons);
+    public void redoEverything(Globals _globals) {
+        SwingUtilities.invokeLater(() -> {
+            JScrollPane licenses = new LicenseUpgrades(globals, eventBus);
+            JScrollPane market = new MarketUpgrades(globals, eventBus);
+            JScrollPane products = new Products(this.globals, eventBus, false, storedButtons);
 
-        int currentIndex = getSelectedIndex();
+            int currentIndex = getSelectedIndex();
 
+            removeAll();
 
-        removeAll();
-        addTab("Licenses", licenses);
-        addTab("Upgrades", market);
-        addTab("Products", products);
+            addTab("Licenses", licenses);
+            addTab("Upgrades", market);
+            addTab("Products", products);
 
-        setSelectedIndex(currentIndex);
+            // Adjust currentIndex if necessary
+            int tabCount = getTabCount();
+            if (currentIndex >= tabCount) {
+                currentIndex = tabCount - 1;
+            }
+            if (currentIndex < 0) {
+                currentIndex = 0;
+            }
+            setSelectedIndex(currentIndex);
+        });
     }
 
-    public Upgrades(Globals globals, EventBus eventBus) {
+    public Upgrades(Globals _globals, EventBus eventBus) {
         this.eventBus = eventBus;
-        this.globals = globals;
+        this.globals = _globals;
 
         JScrollPane licenses = new LicenseUpgrades(globals, eventBus);
         JScrollPane market = new MarketUpgrades(globals, eventBus);
@@ -233,45 +260,6 @@ class Products extends JScrollPane {
 
                 double price = random.nextDouble() * (max_price - min_price) + min_price;
 
-                JButton button = new JButton(String.format(
-                        "<html><center>%s<br/>%.2f$</center></html>", product.fullname, price));
-                button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
-
-
-                boolean doesUserOwnLicense = false;
-                boolean doesUserOwnAisle = false;
-
-                if (product.requires_license.equals("none")) {
-                    doesUserOwnLicense = true;
-                } else {
-                    for (TLicense license : globals.licenses) {
-                        if (license.name.equals(product.requires_license)) {
-                            doesUserOwnLicense = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (product.requires_aisle.equals("none")) {
-                    doesUserOwnAisle = true;
-                } else {
-                    for (TUpgrade upgrade : globals.upgrades) {
-                        if (upgrade.name.equals(product.requires_aisle)) {
-                            doesUserOwnAisle = true;
-                            break;
-                        }
-                    }
-                }
-
-
-                if (price >= globals.money || globals.power <= 0 || !doesUserOwnLicense || !doesUserOwnAisle) {
-                    button.setForeground(Color.red);
-                    button.setEnabled(false);
-                }
-
-
-                button.setFont(new Font("Arial", Font.PLAIN, 18));
-                innerPanel.add(button, c);
 
                 // Reflects the product listing to the TBoughtProducts interface to be saved
                 TBoughtProducts boughtProduct = new TBoughtProducts();
@@ -293,92 +281,71 @@ class Products extends JScrollPane {
 
                 storedButtons.buttons.add(boughtProduct);
 
-                button.addActionListener(e -> {
-                    boolean isUnique = false;
-
-                    for (int i = 0; i < globals.products.size(); i++) {
-                        if (globals.products.get(i).isTwoProductsEqual(boughtProduct)) {
-                            globals.products.get(i).quantity++;
-                            isUnique = true;
-                            break;
-                        }
-                    }
-
-                    if (!isUnique) {
-                        globals.products.add(boughtProduct);
-                    }
-
-                    globals.power--;
-                    globals.money -= boughtProduct.price;
-
-                    eventBus.post(globals);
-                });
-
-
             }
-        } else {
-            for (TBoughtProducts product : storedButtons.buttons) {
-                JButton button = new JButton(String.format(
-                        "<html><center>%s<br/>%.2f$</center></html>", product.fullname, product.price));
-                button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+        }
 
-                boolean doesUserOwnLicense = false;
-                boolean doesUserOwnAisle = false;
+        for (TBoughtProducts product : storedButtons.buttons) {
+            JButton button = new JButton(String.format(
+                    "<html><center>%s<br/>%.2f$</center></html>", product.fullname, product.price));
+            button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
 
-                if (product.requires_license.equals("none")) {
-                    doesUserOwnLicense = true;
-                } else {
-                    for (TLicense license : globals.licenses) {
-                        if (license.name.equals(product.requires_license)) {
-                            doesUserOwnLicense = true;
-                            break;
-                        }
+            boolean doesUserOwnLicense = false;
+            boolean doesUserOwnAisle = false;
+
+            if (product.requires_license.equals("none")) {
+                doesUserOwnLicense = true;
+            } else {
+                for (TLicense license : globals.licenses) {
+                    if (license.name.equals(product.requires_license)) {
+                        doesUserOwnLicense = true;
+                        break;
                     }
                 }
-
-                if (product.requires_aisle.equals("none")) {
-                    doesUserOwnAisle = true;
-                } else {
-                    for (TUpgrade upgrade : globals.upgrades) {
-                        if (upgrade.name.equals(product.requires_aisle)) {
-                            doesUserOwnAisle = true;
-                            break;
-                        }
-                    }
-                }
-
-
-                if (product.price >= globals.money || globals.power <= 0 || !doesUserOwnLicense || !doesUserOwnAisle) {
-                    button.setForeground(Color.red);
-                    button.setEnabled(false);
-                }
-                button.setFont(new Font("Arial", Font.PLAIN, 18));
-                innerPanel.add(button, c);
-
-
-                button.addActionListener(e -> {
-                    boolean isUnique = false;
-
-                    for (int i = 0; i < globals.products.size(); i++) {
-                        if (globals.products.get(i).isTwoProductsEqual(product)) {
-                            globals.products.get(i).quantity++;
-                            isUnique = true;
-                            break;
-                        }
-                    }
-
-                    if (!isUnique) {
-                        globals.products.add(product);
-                    }
-
-                    globals.power--;
-                    globals.money -= product.price;
-
-                    eventBus.post(globals);
-                });
-
-
             }
+
+            if (product.requires_aisle.equals("none")) {
+                doesUserOwnAisle = true;
+            } else {
+                for (TUpgrade upgrade : globals.upgrades) {
+                    if (upgrade.name.equals(product.requires_aisle)) {
+                        doesUserOwnAisle = true;
+                        break;
+                    }
+                }
+            }
+
+
+            if (product.price >= globals.money || globals.power <= 0 || !doesUserOwnLicense || !doesUserOwnAisle) {
+                button.setForeground(Color.red);
+                button.setEnabled(false);
+            }
+            button.setFont(new Font("Arial", Font.PLAIN, 18));
+            innerPanel.add(button, c);
+
+
+            button.addActionListener(e -> {
+                boolean isUnique = false;
+
+                for (TBoughtProducts product2 : globals.products) {
+                    if (product2.isTwoProductsEqual(product)) {
+                        product2.quantity++;
+                        isUnique = true;
+                        break;
+                    }
+                }
+
+                if (!isUnique) {
+                    globals.products.add(product);
+                }
+
+                globals.power--;
+                globals.money -= product.price;
+
+                eventBus.post(globals);
+                eventBus.post(new RedrawTableEvent(globals));
+            });
+
+
         }
 
 
