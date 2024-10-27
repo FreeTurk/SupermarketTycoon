@@ -12,3 +12,4 @@ plugins {
 
 rootProject.name = "supermarkettycoon"
 include("app")
+

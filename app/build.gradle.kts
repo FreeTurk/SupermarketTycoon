@@ -5,10 +5,15 @@
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/8.10.2/userguide/building_java_projects.html in the Gradle documentation.
  */
 
+import org.gradle.jvm.tasks.Jar
+
+
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
 }
+
+
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -29,11 +34,37 @@ dependencies {
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
 application {
     // Define the main class for the application.
     mainClass = "org.supermarkettycoon.Main"
+}
+
+
+tasks.register<Jar>("fatJar") {
+    archiveClassifier.set("all") // The classifier for the output JAR file (e.g., myapp-all.jar)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    // Include the main output of the project
+    from(sourceSets.main.get().output)
+
+    // Include runtime dependencies
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get()
+            .filter { it.name.endsWith("jar") }
+            .map { zipTree(it) }
+    })
+
+    // Set the Main-Class attribute (optional)
+    manifest {
+        attributes["Main-Class"] = "org.supermarkettycoon.Main"
+    }
+}
+
+tasks.named("assemble") {
+    dependsOn("fatJar")
 }
