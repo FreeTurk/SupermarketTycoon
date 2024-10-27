@@ -67,10 +67,7 @@ public class TopBar extends JPanel {
                             JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // If funds are insufficient, display a Game Over message and disable the next day button
-                    JOptionPane.showMessageDialog(this,
-                            "You don't have enough money to pay rent! Game Over.",
-                            "Game Over",
-                            JOptionPane.ERROR_MESSAGE);
+                    globals.bankrupt = true;
                     nextDay.setEnabled(false); 
                     return; 
                 }

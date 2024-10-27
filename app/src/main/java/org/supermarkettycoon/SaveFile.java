@@ -72,8 +72,10 @@ public class SaveFile extends TSaveFile {
         currentData.licenses = globals.licenses;
         currentData.money = globals.money;
         currentData.power = globals.power;
+        currentData.bankrupt = globals.bankrupt;
         currentData.products = globals.products;
         currentData.upgrades = globals.upgrades;
+
 
         // Converts the current game data to JSON and writes it to the save file
         String newSaveData = gson.toJson(currentData, TSaveFile.class);
@@ -101,6 +103,7 @@ public class SaveFile extends TSaveFile {
         globals.licenses = sf.licenses;
         globals.money = sf.money;
         globals.power = sf.power;
+        globals.bankrupt = sf.bankrupt;
         globals.products = sf.products;
         globals.upgrades = sf.upgrades;
     }

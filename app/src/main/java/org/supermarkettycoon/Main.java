@@ -80,7 +80,7 @@ class Main extends JFrame {
         setVisible(true);
 
         // Checks if the player has gone bankrupt and shows LoseGameDialog if true
-        if (globals.money < 0) {
+        if (globals.bankrupt) {
             new LoseGameDialog(this, globals).setVisible(true); 
         }
     }
