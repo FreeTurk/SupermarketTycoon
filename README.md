@@ -26,6 +26,13 @@ Run the game:
 gradle run
 ```
 
+**Build File**
+   Build file is located in
+   ```sh
+   app/build/libs
+   ```
+
+
 ## Game Overview
 
 The game interface consists of four primary sections:
@@ -79,6 +86,38 @@ The goal is to make efficient decisions daily to avoid bankruptcy. Key objective
 - **Avoiding Bankruptcy:** There’s a recurring expense of $100 every 10 days, so ensure earnings exceed this amount to stay afloat.
 
 ---
+
+## Topics Of Choice
+
+## Git
+
+**Definition:**  
+Git is a DevOps tool used for source code management. It allows developers to manage and track changes in code, enabling rollbacks to previous versions so that no code is lost.
+
+**Importance of Using Git:**  
+Given the complexity of the game's system, especially on the backend, multiple updates and patches will likely be needed to address potential bugs and optimize gameplay. When tackling bugs or implementing updates, there is a risk of losing the main source code, which could compromise the development process. Git mitigates this risk by:
+
+- **Version Control:** Allowing developers to view and roll back to previous versions of the codebase as needed, preserving the integrity of the project.
+- **Collaborative Development:** Enabling multiple developers to work on the same project simultaneously using branches. Branching allows for isolated changes and code merging, ensuring smoother collaboration.
+
+By using Git, developers can build on the project safely, make patches, and implement gameplay changes without risking code loss. It supports robust project management and minimizes development risks.
+
+---
+
+## UX (User Experience)
+
+**Definition:**  
+UX, short for User Experience, refers to how a user interacts with a product or service, encompassing aspects like ease of use, accessibility, and overall satisfaction with the interface.
+
+**Importance of UX in the Game:**  
+The game's design requires strategic planning and micromanagement, presenting a learning curve for new players. To ensure players remain engaged rather than frustrated, UX is a critical focus. Key UX considerations for the game include:
+
+- **Control and Clarity:** Since players need absolute control over supermarket management, a refined user interface is essential to facilitate engagement and comprehension.
+- **Intuitive Design:** The interface should be aesthetically pleasing, easy to navigate, and structured for clarity. Key functions should be placed appropriately to enhance positional memory, helping players quickly locate frequently used controls.
+- **Enhanced Experience:** An accessible interface allows players to focus on strategy rather than struggling with navigation, improving the overall game experience.
+
+A well-designed UX is essential for maintaining player interest, reducing the learning curve, and ensuring that strategic gameplay feels rewarding rather than cumbersome.
+
 
 ## Contact
 
