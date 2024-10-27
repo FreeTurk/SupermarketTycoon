@@ -14,11 +14,11 @@ public class Stocks extends JPanel {
     JTable table;
     DefaultTableModel model;
     String[] columns = {"Amount", "Name", "Time Left", "Sell Price"};
-    Globals globals;
+    Globals _globals;
 
 
     public Stocks(Globals globals) {
-        globals = globals;
+        _globals = globals;
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
 
@@ -48,15 +48,15 @@ public class Stocks extends JPanel {
                 double newPriceFormatted = Double.parseDouble(formatter.format(Double.valueOf((String) newValue)));
 
 
-                for (int i = 0; i < globals.products.size(); i++) {
-                    TBoughtProducts product = globals.products.get(i);
-                    Integer expiryDate = timeLeft + (globals.day - product.buydate);
+                for (int i = 0; i < _globals.products.size(); i++) {
+                    TBoughtProducts product = _globals.products.get(i);
+                    Integer expiryDate = timeLeft + (_globals.day - product.buydate);
 
                     if (oldPrice.equals(product.price) &&
                             product.name.equals(name) &&
                             amount.equals(product.quantity) &&
                             expiryDate.equals(product.expiry_time)) {
-                        globals.products.get(i).price = Double.parseDouble((String) newValue);
+                        _globals.products.get(i).price = Double.parseDouble((String) newValue);
                     }
                 }
 
@@ -108,21 +108,21 @@ public class Stocks extends JPanel {
 
     @Subscribe
     public void dailyProductSellUpdate(NewDayEvent nde) {
-        for (int i = 0; i < globals.products.size(); i++) {
-            TBoughtProducts product = globals.products.get(i);
+        for (int i = 0; i < _globals.products.size(); i++) {
+            TBoughtProducts product = _globals.products.get(i);
             Random random = new Random();
 
-            int leftDayForProd = product.expiry_time - (globals.day - product.buydate);
+            int leftDayForProd = product.expiry_time - (_globals.day - product.buydate);
             int maxCustomers = (int) (Math.round(((double) product.quantity / leftDayForProd))
                     * (product.originalPrice / product.price));
             int sellAmount = random.nextInt(0, maxCustomers + 1);
 
-            globals.money += product.price * sellAmount;
+            _globals.money += product.price * sellAmount;
 
             if (sellAmount >= product.quantity) {
-                globals.products.remove(product);
+                _globals.products.remove(product);
             } else {
-                globals.products.get(i).quantity -= sellAmount;
+                _globals.products.get(i).quantity -= sellAmount;
             }
         }
     }
