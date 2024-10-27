@@ -48,9 +48,11 @@ public class TopBar extends JPanel {
             for (TUpgrade upgrade : globals.upgrades) {
                 if (upgrade.name.equals("energy_boost_1")) {
                     globals.power += 5;
-                } else if (upgrade.name.equals("energy_boost_2")) {
+                }
+                if (upgrade.name.equals("energy_boost_2")) {
                     globals.power += 10;
-                } else if (upgrade.name.equals("energy_boost_3")) {
+                }
+                if (upgrade.name.equals("energy_boost_3")) {
                     globals.power += 15;
                 }
             }
