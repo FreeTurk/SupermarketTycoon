@@ -27,7 +27,7 @@ public class Upgrades extends JTabbedPane {
             // Collect products to remove instead of modifying during iteration
             ArrayList<TBoughtProducts> productsToRemove = new ArrayList<TBoughtProducts>();
             globals.products.forEach(product -> {
-                if (product.expiry_time == globals.day - product.buydate || product.quantity <= 10) {
+                if (product.expiry_time <= globals.day - product.buydate || product.quantity <= 0) {
                     productsToRemove.add(product);
                 }
             });
@@ -309,19 +309,33 @@ class Products extends JScrollPane {
             button.addActionListener(e -> {
                 TBoughtProducts existingProduct = globals.products.stream()
                         .filter(boughtProduct -> boughtProduct.name.equals(product.name) && boughtProduct.buydate == globals.day)
-                        .findAny()
+                        .findFirst()
                         .orElse(null);
 
                 if (existingProduct != null) {
-                    System.out.println(existingProduct.quantity);
                     int index = globals.products.indexOf(existingProduct);
-                    existingProduct.quantity += 2;
+                    existingProduct.quantity += 1;
                     globals.products.set(index, existingProduct);
-                    TBoughtProducts updatedProduct = globals.products.get(index);
-                    globals.products.remove(index);
-                    globals.products.add(index, updatedProduct);
                 } else {
-                    globals.products.add(product);
+                    // Create a new instance of TBoughtProducts
+                    TBoughtProducts newProduct = new TBoughtProducts();
+                    newProduct.fullname = product.fullname;
+                    newProduct.quantity = 1;  // Start at quantity 1
+                    newProduct.price = product.price;
+                    newProduct.originalPrice = product.originalPrice;
+                    newProduct.min_price = product.min_price;
+                    newProduct.max_price = product.max_price;
+                    newProduct.preferred_season = product.preferred_season;
+                    newProduct.non_preferred_season = product.non_preferred_season;
+                    newProduct.expiry_time = product.expiry_time;
+                    newProduct.name = product.name;
+                    newProduct.buydate = globals.day;
+                    newProduct.requires_aisle = product.requires_aisle;
+                    newProduct.requires_license = product.requires_license;
+                    newProduct.non_preferred_season_price_decrease_percentage = product.non_preferred_season_price_decrease_percentage;
+                    newProduct.preferred_season_price_increase_percentage = product.preferred_season_price_increase_percentage;
+
+                    globals.products.add(newProduct);
                 }
 
                 globals.power--;
