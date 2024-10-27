@@ -10,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.text.DecimalFormat;
-import java.util.Iterator;
 import java.util.Random;
 
 public class Stocks extends JPanel {
@@ -95,16 +94,7 @@ public class Stocks extends JPanel {
             }
         };
 
-        Object[][] rows = new Object[globals.products.size()][4];
-
-        for (int i = 0; i < globals.products.size(); i++) {
-            rows[i][0] = globals.products.get(i).quantity;
-            rows[i][1] = globals.products.get(i).name;
-            rows[i][2] = globals.products.get(i).expiry_time - (globals.day - globals.products.get(i).buydate);
-            rows[i][3] = globals.products.get(i).price;
-        }
-
-        this.model.setDataVector(rows, columns);
+        updateTable(globals);
 
         JScrollPane scrollPane = new JScrollPane();
         // Create a new JTable object
@@ -124,29 +114,24 @@ public class Stocks extends JPanel {
         scrollPane.setViewportView(table);
     }
 
-    @Subscribe
-    public void updateTable(RedrawTableEvent globals) {
-        Object[][] rows;
+    public void updateTable(Globals globals) {
 
-        if (!globals.globals.products.isEmpty()) {
-            rows = new Object[globals.globals.products.size()][4];
+        Object[][] rows = new Object[globals.products.size()][4];
 
-            for (int i = 0; i < globals.globals.products.size(); i++) {
-                rows[i][0] = globals.globals.products.get(i).quantity;
-                rows[i][1] = globals.globals.products.get(i).name;
-                rows[i][2] = globals.globals.products.get(i).expiry_time - (globals.globals.day - globals.globals.products.get(i).buydate);
-                rows[i][3] = globals.globals.products.get(i).price;
-            }
-
-        } else {
-            rows = new Object[0][4];
+        for (int i = 0; i < globals.products.size(); i++) {
+            rows[i][0] = globals.products.get(i).quantity;
+            rows[i][1] = globals.products.get(i).name;
+            rows[i][2] = globals.products.get(i).expiry_time - (globals.day - globals.products.get(i).buydate);
+            rows[i][3] = globals.products.get(i).price;
         }
-
 
         this.model.setDataVector(rows, columns);
         this.model.fireTableDataChanged();
+    }
 
-        _eventBus.post(globals.globals);
+    @Subscribe
+    public void updateTableOnGlobalChange(Globals globals) {
+        updateTable(_globals);
     }
 
 <<<<<<< HEAD

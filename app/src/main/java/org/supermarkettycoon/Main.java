@@ -35,11 +35,22 @@ class Main extends JFrame {
         eventBus.register(upgrades);
 
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+        SpriteScreen spriteScreen = new SpriteScreen();
+=======
+        SpriteScreen spriteScreen = new SpriteScreen(globals);
+>>>>>>> Stashed changes
+=======
         SpriteScreen spriteScreen = new SpriteScreen(globals);
 <<<<<<< HEAD
         eventBus.register(spriteScreen);
+<<<<<<< HEAD
 =======
 >>>>>>> origin/frontend
+=======
+>>>>>>> Stashed changes
+>>>>>>> parent of 5571b23 (Trying to fix shit)
         GridBagConstraints c = new GridBagConstraints();
 
         // Sets the layout of the main window
