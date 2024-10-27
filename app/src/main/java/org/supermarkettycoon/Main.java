@@ -76,6 +76,10 @@ class Main extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
+        if (globals.money < 0) {
+            new LoseGameDialog(this, globals).setVisible(true);
+        }
+
     }
 
     public static void main(String[] args) {
