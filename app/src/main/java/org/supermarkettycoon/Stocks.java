@@ -1,8 +1,10 @@
 package org.supermarkettycoon;
 
+import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
@@ -14,11 +16,13 @@ public class Stocks extends JPanel {
     JTable table;
     DefaultTableModel model;
     String[] columns = {"Amount", "Name", "Time Left", "Sell Price"};
-    Globals globals;
+    Globals _globals;
+    EventBus _eventBus;
 
 
-    public Stocks(Globals globals) {
-        globals = globals;
+    public Stocks(Globals globals, EventBus eventBus) {
+        _globals = globals;
+        _eventBus = eventBus;
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
 
@@ -60,7 +64,7 @@ public class Stocks extends JPanel {
                     }
                 }
 
-                super.setValueAt(Double.toString(newPriceFormatted), row, column);
+                super.setValueAt(newPriceFormatted, row, column);
             }
         };
 
@@ -85,6 +89,7 @@ public class Stocks extends JPanel {
     }
 
     public void updateTable(Globals globals) {
+
         Object[][] rows = new Object[globals.products.size()][4];
 
         for (int i = 0; i < globals.products.size(); i++) {
@@ -95,36 +100,13 @@ public class Stocks extends JPanel {
         }
 
         this.model.setDataVector(rows, columns);
-    }
-
-    @Subscribe
-    public void updateTableOnGlobalChange(Globals globals) {
-        String[] columns = {"Amount", "Name", "Time Left", "Sell Price"};
-
-        updateTable(globals);
-
         this.model.fireTableDataChanged();
     }
 
     @Subscribe
-    public void dailyProductSellUpdate(NewDayEvent nde) {
-        for (int i = 0; i < globals.products.size(); i++) {
-            TBoughtProducts product = globals.products.get(i);
-            Random random = new Random();
-
-            int leftDayForProd = product.expiry_time - (globals.day - product.buydate);
-            int maxCustomers = (int) (Math.round(((double) product.quantity / leftDayForProd))
-                    * (product.originalPrice / product.price));
-            int sellAmount = random.nextInt(0, maxCustomers + 1);
-
-            globals.money += product.price * sellAmount;
-
-            if (sellAmount >= product.quantity) {
-                globals.products.remove(product);
-            } else {
-                globals.products.get(i).quantity -= sellAmount;
-            }
-        }
+    public void updateTableOnGlobalChange(Globals globals) {
+        updateTable(_globals);
     }
+
 
 }

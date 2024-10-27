@@ -3,6 +3,7 @@ package org.supermarkettycoon;
 import javax.swing.*;
 
 import java.awt.*;
+import java.util.Random;
 
 import com.google.common.eventbus.Subscribe;
 import com.google.common.eventbus.EventBus;
@@ -44,13 +45,44 @@ public class TopBar extends JPanel {
             globals.day++;
             globals.power = 10;
 
+            int totalCustomers = 0;
+
+            int maxIndex = globals.products.size();
+
+            for (int i = 0; i < maxIndex; i++) {
+                TBoughtProducts product = globals.products.get(i);
+                Random random = new Random();
+
+                int maxCustomers = (int) Math.round(((double) globals.day / 10) * (product.originalPrice / product.price));
+                int sellAmount = random.nextInt(0, maxCustomers + 1);
+
+                globals.money += product.price * sellAmount;
+
+                if (sellAmount >= product.quantity) {
+                    sellAmount = product.quantity;
+                }
+
+                globals.products.get(i).quantity -= sellAmount;
+                totalCustomers += sellAmount;
+                sellAmount = 0;
+            }
+
+
+            eventBus.post(new NewDayEvent());
+            eventBus.post(globals);
+
+            System.out.printf("Customers today %d%n", totalCustomers);
+
+            RedrawSpriteEvent rse = new RedrawSpriteEvent();
+            rse.customerNumber = totalCustomers;
+            eventBus.post(rse);
+
+            rse = new RedrawSpriteEvent();
             try {
                 globals.saveGame(globals);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            eventBus.post(globals);
-            eventBus.post(new NewDayEvent());
         });
 
 

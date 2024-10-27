@@ -29,16 +29,21 @@ class Main extends JFrame {
 
         TopBar topBar = new TopBar(globals, eventBus);
         eventBus.register(topBar);
-        Stocks stocks = new Stocks(globals);
+        Stocks stocks = new Stocks(globals, eventBus);
         eventBus.register(stocks);
         Upgrades upgrades = new Upgrades(globals, eventBus);
         eventBus.register(upgrades);
 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         SpriteScreen spriteScreen = new SpriteScreen();
 =======
         SpriteScreen spriteScreen = new SpriteScreen(globals);
+>>>>>>> Stashed changes
+=======
+        SpriteScreen spriteScreen = new SpriteScreen(globals);
+        eventBus.register(spriteScreen);
 >>>>>>> Stashed changes
         GridBagConstraints c = new GridBagConstraints();
 

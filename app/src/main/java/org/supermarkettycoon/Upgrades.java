@@ -2,6 +2,8 @@ package org.supermarkettycoon;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 import com.google.common.eventbus.EventBus;
@@ -10,27 +12,50 @@ import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+class StoredButtons {
+    ArrayList<TBoughtProducts> buttons = new ArrayList<TBoughtProducts>();
+}
 
 public class Upgrades extends JTabbedPane {
     EventBus eventBus;
     Globals globals;
+    StoredButtons storedButtons = new StoredButtons();
 
     @Subscribe
     public void redoProductsPage(NewDayEvent nde) {
         // Remove any old products.
         globals.products.forEach(product -> {
-            if (product.expiry_time == globals.day - product.buydate) {
+            if (product.expiry_time == globals.day - product.buydate || product.quantity <= 1) {
                 globals.products.remove(product);
             }
         });
 
 
         if (globals.day % 10 == 0) {
-            JScrollPane products = new Products(this.globals, eventBus);
+            JScrollPane products = new Products(this.globals, eventBus, true, storedButtons);
             removeTabAt(2);
             addTab("Products", products);
             setSelectedIndex(2);
         }
+    }
+
+    @Subscribe
+    public void redoEverything(Globals globals) {
+        JScrollPane licenses = new LicenseUpgrades(globals, eventBus);
+        JScrollPane market = new MarketUpgrades(globals, eventBus);
+        JScrollPane products = new Products(globals, eventBus, false, storedButtons);
+
+        int currentIndex = getSelectedIndex();
+
+
+        removeAll();
+        addTab("Licenses", licenses);
+        addTab("Upgrades", market);
+        addTab("Products", products);
+
+        setSelectedIndex(currentIndex);
     }
 
     public Upgrades(Globals globals, EventBus eventBus) {
@@ -39,7 +64,7 @@ public class Upgrades extends JTabbedPane {
 
         JScrollPane licenses = new LicenseUpgrades(globals, eventBus);
         JScrollPane market = new MarketUpgrades(globals, eventBus);
-        JScrollPane products = new Products(globals, eventBus);
+        JScrollPane products = new Products(globals, eventBus, true, storedButtons);
 
         addTab("Licenses", licenses);
         addTab("Upgrades", market);
@@ -75,16 +100,19 @@ class LicenseUpgrades extends JScrollPane {
                     "<html><center>" + license.fullname + " License" + "<br/>" + license.price + "$" + "</center></html>");
             button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
 
-            if (license.price <= globals.money || globals.power <= 0) {
+
+            if (license.price >= globals.money || globals.power <= 0) {
                 button.setForeground(Color.red);
                 button.setEnabled(false);
             }
 
             button.setFont(new Font("Arial", Font.PLAIN, 18));
 
-            if (globals.licenses.contains(license)) {
-                button.setEnabled(false);
-            }
+            globals.licenses.forEach(tLicense -> {
+                if (tLicense.name.equals(license.name)) {
+                    button.setEnabled(false);
+                }
+            });
 
             button.addActionListener(e -> {
                 globals.licenses.add(license);
@@ -132,13 +160,18 @@ class MarketUpgrades extends JScrollPane {
             JButton button = new JButton(
                     "<html><center>" + upgrade.fullname + "<br/>" + upgrade.price + "$" + "</center></html>");
             button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
-            if (upgrade.price <= globals.money || globals.power <= 0) {
+            if (upgrade.price >= globals.money || globals.power <= 0) {
                 button.setForeground(Color.red);
                 button.setEnabled(false);
             }
 
             button.setFont(new Font("Arial", Font.PLAIN, 18));
 
+            globals.upgrades.forEach(tUpgrade -> {
+                if (tUpgrade.name.equals(upgrade.name)) {
+                    button.setEnabled(false);
+                }
+            });
 
             button.addActionListener(e -> {
                 globals.upgrades.add(upgrade);
@@ -149,9 +182,6 @@ class MarketUpgrades extends JScrollPane {
                 eventBus.post(globals);
             });
 
-            if (globals.upgrades.contains(upgrade)) {
-                button.setEnabled(false);
-            }
             innerPanel.add(button, c);
         }
 
@@ -162,7 +192,7 @@ class MarketUpgrades extends JScrollPane {
 }
 
 class Products extends JScrollPane {
-    Products(Globals globals, EventBus eventBus) {
+    Products(Globals globals, EventBus eventBus, boolean redoPrices, StoredButtons storedButtons) {
         GridBagLayout layout = new GridBagLayout();
         layout.columnWeights = new double[]{1f};
         JPanel innerPanel = new JPanel(layout);
@@ -182,81 +212,175 @@ class Products extends JScrollPane {
         Gson gson = new Gson();
         TProduct[] products = gson.fromJson(productsJSONString, TProduct[].class);
 
-        for (TProduct product : products) {
-            double min_price = product.min_price;
-            double max_price = product.max_price;
+        if (redoPrices) {
+            storedButtons.buttons = new ArrayList<TBoughtProducts>();
 
-            if (product.preferred_season.equals(globals.season())) {
-                min_price *= 1 + product.preferred_season_price_increase_percentage / 100;
-                max_price *= 1 + product.preferred_season_price_increase_percentage / 100;
-            }
+            for (TProduct product : products) {
+                double min_price = product.min_price;
+                double max_price = product.max_price;
 
-            if (product.non_preferred_season.equals(globals.season())) {
-                min_price *= 1 - product.non_preferred_season_price_decrease_percentage / 100;
-                max_price *= 1 - product.non_preferred_season_price_decrease_percentage / 100;
-            }
+                if (product.preferred_season.equals(globals.season())) {
+                    min_price *= 1 + product.preferred_season_price_increase_percentage / 100;
+                    max_price *= 1 + product.preferred_season_price_increase_percentage / 100;
+                }
 
-            Random random = new Random();
+                if (product.non_preferred_season.equals(globals.season())) {
+                    min_price *= 1 - product.non_preferred_season_price_decrease_percentage / 100;
+                    max_price *= 1 - product.non_preferred_season_price_decrease_percentage / 100;
+                }
 
-            double price = random.nextDouble() * (max_price - min_price) + min_price;
+                Random random = new Random();
 
-            JButton button = new JButton(String.format(
-                    "<html><center>%s<br/>%.2f$</center></html>", product.fullname, price));
-            button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+                double price = random.nextDouble() * (max_price - min_price) + min_price;
 
-            if (price <= globals.money || globals.power <= 0) {
-                button.setForeground(Color.red);
-                button.setEnabled(false);
-            }
-
-            button.setFont(new Font("Arial", Font.PLAIN, 18));
-            innerPanel.add(button, c);
-
-            // Reflects the product listing to the TBoughtProducts interface to be saved
-            TBoughtProducts boughtProduct = new TBoughtProducts();
-            boughtProduct.fullname = product.fullname;
-            boughtProduct.quantity = 1;
-            boughtProduct.price = price;
-            boughtProduct.originalPrice = price;
-            boughtProduct.min_price = min_price;
-            boughtProduct.max_price = max_price;
-            boughtProduct.preferred_season = product.preferred_season;
-            boughtProduct.non_preferred_season = product.non_preferred_season;
-            boughtProduct.expiry_time = product.expiry_time;
-            boughtProduct.name = product.name;
-            boughtProduct.buydate = globals.day;
-            boughtProduct.requires_aisle = product.requires_aisle;
-            boughtProduct.requires_license = product.requires_license;
-            boughtProduct.non_preferred_season_price_decrease_percentage = product.non_preferred_season_price_decrease_percentage;
-            boughtProduct.preferred_season_price_increase_percentage = product.preferred_season_price_increase_percentage;
+                JButton button = new JButton(String.format(
+                        "<html><center>%s<br/>%.2f$</center></html>", product.fullname, price));
+                button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
 
 
-            button.addActionListener(e -> {
-                boolean isUnique = false;
+                boolean doesUserOwnLicense = false;
+                boolean doesUserOwnAisle = false;
 
-                for (int i = 0; i < globals.products.size(); i++) {
-                    if (globals.products.get(i).isTwoProductsEqual(boughtProduct)) {
-                        globals.products.get(i).quantity = globals.products.get(i).quantity + 1;
-                        isUnique = true;
-                        break;
+                if (product.requires_license.equals("none")) {
+                    doesUserOwnLicense = true;
+                } else {
+                    for (TLicense license : globals.licenses) {
+                        if (license.name.equals(product.requires_license)) {
+                            doesUserOwnLicense = true;
+                            break;
+                        }
                     }
                 }
 
-                if (!isUnique) {
-                    globals.products.add(boughtProduct);
+                if (product.requires_aisle.equals("none")) {
+                    doesUserOwnAisle = true;
+                } else {
+                    for (TUpgrade upgrade : globals.upgrades) {
+                        if (upgrade.name.equals(product.requires_aisle)) {
+                            doesUserOwnAisle = true;
+                            break;
+                        }
+                    }
                 }
 
-                globals.power--;
 
-                eventBus.post(globals);
-            });
+                if (price >= globals.money || globals.power <= 0 || !doesUserOwnLicense || !doesUserOwnAisle) {
+                    button.setForeground(Color.red);
+                    button.setEnabled(false);
+                }
 
-            if (globals.products.contains(boughtProduct)) {
-                button.setEnabled(false);
+
+                button.setFont(new Font("Arial", Font.PLAIN, 18));
+                innerPanel.add(button, c);
+
+                // Reflects the product listing to the TBoughtProducts interface to be saved
+                TBoughtProducts boughtProduct = new TBoughtProducts();
+                boughtProduct.fullname = product.fullname;
+                boughtProduct.quantity = 1;
+                boughtProduct.price = price;
+                boughtProduct.originalPrice = price;
+                boughtProduct.min_price = min_price;
+                boughtProduct.max_price = max_price;
+                boughtProduct.preferred_season = product.preferred_season;
+                boughtProduct.non_preferred_season = product.non_preferred_season;
+                boughtProduct.expiry_time = product.expiry_time;
+                boughtProduct.name = product.name;
+                boughtProduct.buydate = globals.day;
+                boughtProduct.requires_aisle = product.requires_aisle;
+                boughtProduct.requires_license = product.requires_license;
+                boughtProduct.non_preferred_season_price_decrease_percentage = product.non_preferred_season_price_decrease_percentage;
+                boughtProduct.preferred_season_price_increase_percentage = product.preferred_season_price_increase_percentage;
+
+                storedButtons.buttons.add(boughtProduct);
+
+                button.addActionListener(e -> {
+                    boolean isUnique = false;
+
+                    for (int i = 0; i < globals.products.size(); i++) {
+                        if (globals.products.get(i).isTwoProductsEqual(boughtProduct)) {
+                            globals.products.get(i).quantity++;
+                            isUnique = true;
+                            break;
+                        }
+                    }
+
+                    if (!isUnique) {
+                        globals.products.add(boughtProduct);
+                    }
+
+                    globals.power--;
+                    globals.money -= boughtProduct.price;
+
+                    eventBus.post(globals);
+                });
+
+
             }
+        } else {
+            for (TBoughtProducts product : storedButtons.buttons) {
+                JButton button = new JButton(String.format(
+                        "<html><center>%s<br/>%.2f$</center></html>", product.fullname, product.price));
+                button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+
+                boolean doesUserOwnLicense = false;
+                boolean doesUserOwnAisle = false;
+
+                if (product.requires_license.equals("none")) {
+                    doesUserOwnLicense = true;
+                } else {
+                    for (TLicense license : globals.licenses) {
+                        if (license.name.equals(product.requires_license)) {
+                            doesUserOwnLicense = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (product.requires_aisle.equals("none")) {
+                    doesUserOwnAisle = true;
+                } else {
+                    for (TUpgrade upgrade : globals.upgrades) {
+                        if (upgrade.name.equals(product.requires_aisle)) {
+                            doesUserOwnAisle = true;
+                            break;
+                        }
+                    }
+                }
 
 
+                if (product.price >= globals.money || globals.power <= 0 || !doesUserOwnLicense || !doesUserOwnAisle) {
+                    button.setForeground(Color.red);
+                    button.setEnabled(false);
+                }
+                button.setFont(new Font("Arial", Font.PLAIN, 18));
+                innerPanel.add(button, c);
+
+
+                button.addActionListener(e -> {
+                    boolean isUnique = false;
+
+                    for (int i = 0; i < globals.products.size(); i++) {
+                        if (globals.products.get(i).isTwoProductsEqual(product)) {
+                            globals.products.get(i).quantity++;
+                            isUnique = true;
+                            break;
+                        }
+                    }
+
+                    if (!isUnique) {
+                        globals.products.add(product);
+                    }
+
+                    globals.power--;
+                    globals.money -= product.price;
+
+                    eventBus.post(globals);
+                });
+
+
+            }
         }
+
 
         setViewportView(innerPanel);
 
