@@ -38,6 +38,16 @@ public class TopBar extends JPanel {
         nextDay.addActionListener(e -> {
             globals.day++;
             globals.power = 10;
+            for (TUpgrade upgrade : globals.upgrades) {
+                if (upgrade.name.equals("energy_boost_1") ) {
+                    globals.power += 5;   
+                } else if (upgrade.name.equals("energy_boost_2")) {
+                    globals.power += 10;
+                } else if (upgrade.name.equals("energy_boost_3")) {
+                    globals.power += 15;
+                }
+            }
+
 
             // Check if it's time to pay rent (every 10 days)
             if (globals.day % 10 == 0) {
@@ -47,10 +57,10 @@ public class TopBar extends JPanel {
                 if (globals.money >= rentAmount) {
                     globals.money -= rentAmount;
                     // Notify the player about the rent payment
-                    JOptionPane.showMessageDialog(this,
-                            String.format("You paid $%.2f as rent.", rentAmount),
-                            "Rent Payment",
-                            JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        String.format("You paid $%.2f as rent.", rentAmount),
+                        "Rent Payment",
+                        JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // Handle insufficient funds (e.g., Game Over)
                     JOptionPane.showMessageDialog(this,
