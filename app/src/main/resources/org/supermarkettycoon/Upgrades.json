@@ -1,0 +1,62 @@
+[
+  {
+    "name": "energy_boost_1",
+    "fullname": "Energy Boost 1",
+    "price": 100
+  },
+  {
+    "name": "energy_boost_2",
+    "fullname": "Energy Boost 2",
+    "price": 400
+  },
+  {
+    "name": "energy_boost_3",
+    "fullname": "Energy Boost 3",
+    "price": 1000
+  },
+  {
+    "name": "refrigerator",
+    "fullname": "Refrigerator",
+    "price": 1000
+  },
+  {
+    "name": "bakery",
+    "fullname": "Bakery",
+    "price": 500
+  },
+  {
+    "name": "butchery",
+    "fullname": "Butchery",
+    "price": 1200
+  },
+  {
+    "name": "grocery",
+    "fullname": "Grocery",
+    "price": 300
+  },
+  {
+    "name": "seafood_section",
+    "fullname": "Seafood Section",
+    "price": 1500
+  },
+  {
+    "name": "household",
+    "fullname": "Household",
+    "price": 400
+  },
+  {
+    "name": "freezer",
+    "fullname": "Freezer",
+    "price": 800
+  },
+  {
+    "name": "alcohol_section",
+    "fullname": "Alcohol Section",
+    "price": 2000
+  },
+  {
+    "name": "tobacco_section",
+    "fullname": "Tobacco Section",
+    "price": 1800
+  }
+]

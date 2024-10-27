@@ -1,0 +1,37 @@
+[
+  {
+    "name": "animal_products",
+    "fullname": "Animal Products",
+    "price": 500
+  },
+  {
+    "name": "bakery_products",
+    "fullname": "Bakery Products",
+    "price": 300
+  },
+  {
+    "name": "meat_products",
+    "fullname": "Meat Products",
+    "price": 700
+  },
+  {
+    "name": "seafood_products",
+    "fullname": "Seafood Products",
+    "price": 600
+  },
+  {
+    "name": "frozen_food",
+    "fullname": "Frozen Food",
+    "price": 400
+  },
+  {
+    "name": "alcohol",
+    "fullname": "Alcohol",
+    "price": 1000
+  },
+  {
+    "name": "tobacco",
+    "fullname": "Tobacco",
+    "price": 1200
+  }
+]
