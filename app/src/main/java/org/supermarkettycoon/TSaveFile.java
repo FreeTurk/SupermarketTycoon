@@ -3,6 +3,7 @@ package org.supermarkettycoon;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 class TBoughtProducts extends TProduct {
     public int quantity;
@@ -10,13 +11,6 @@ class TBoughtProducts extends TProduct {
     public double originalPrice;
     public int buydate;
 
-    public boolean isTwoProductsEqual(TBoughtProducts product) {
-        int oldQuantity = this.quantity;
-        this.quantity = 1;
-        boolean isEqual = this.equals(product);
-        this.quantity = oldQuantity;
-        return isEqual;
-    }
 }
 
 public class TSaveFile {

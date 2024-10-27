@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 class StoredButtons {
     ArrayList<TBoughtProducts> buttons = new ArrayList<TBoughtProducts>();
@@ -19,75 +20,55 @@ public class Upgrades extends JTabbedPane {
     Globals globals;
     StoredButtons storedButtons = new StoredButtons();
 
-    boolean isRedone = false;
-
-
     @Subscribe
-    public void newDay(NewDayEvent event) {
+    public void redoProductsPage(NewDayEvent nde) {
         SwingUtilities.invokeLater(() -> {
+
+            // Collect products to remove instead of modifying during iteration
+            ArrayList<TBoughtProducts> productsToRemove = new ArrayList<TBoughtProducts>();
+            globals.products.forEach(product -> {
+                if (product.expiry_time == globals.day - product.buydate || product.quantity <= 10) {
+                    productsToRemove.add(product);
+                }
+            });
+            // Remove products after iteration
+            globals.products.removeAll(productsToRemove);
+
+            eventBus.post(storedButtons);
+
+            redoEverything(globals);
+
+
             if (globals.day % 10 == 0) {
-                SwingUtilities.invokeLater(() -> {
-                    // Find and remove the "Products" tab if it exists
-                    int productsTabIndex = -1;
-                    for (int i = 0; i < getTabCount(); i++) {
-                        if ("Products".equals(getTitleAt(i))) {
-                            productsTabIndex = i;
-                            break;
-                        }
-                    }
-                    if (productsTabIndex != -1) {
-                        removeTabAt(productsTabIndex);
-                    }
-
-                    // Add the new "Products" tab
-                    JScrollPane products = new Products(globals, eventBus, true, storedButtons);
-                    addTab("Products", products);
-
-                    // Update selected index if necessary
-                    int currentIndex = getSelectedIndex();
-                    int tabCount = getTabCount();
-                    if (currentIndex >= tabCount) {
-                        currentIndex = tabCount - 1;
-                    }
-                    setSelectedIndex(currentIndex);
-                });
+                JScrollPane products = new Products(this.globals, eventBus, true, storedButtons);
+                removeTabAt(2);
+                addTab("Products", products);
+                setSelectedIndex(2);
             }
-
-            eventBus.post(globals);
-            eventBus.post(new RedrawTableEvent(globals));
         });
+
     }
 
     @Subscribe
-    public void redoEverything(Globals _globals) {
-        SwingUtilities.invokeLater(() -> {
-            JScrollPane licenses = new LicenseUpgrades(globals, eventBus);
-            JScrollPane market = new MarketUpgrades(globals, eventBus);
-            JScrollPane products = new Products(this.globals, eventBus, false, storedButtons);
+    public void redoEverything(Globals globals) {
+        JScrollPane licenses = new LicenseUpgrades(this.globals, eventBus);
+        JScrollPane market = new MarketUpgrades(this.globals, eventBus);
+        JScrollPane products = new Products(this.globals, eventBus, false, storedButtons);
 
-            int currentIndex = getSelectedIndex();
+        int currentIndex = getSelectedIndex();
 
-            removeAll();
 
-            addTab("Licenses", licenses);
-            addTab("Upgrades", market);
-            addTab("Products", products);
+        removeAll();
+        addTab("Licenses", licenses);
+        addTab("Upgrades", market);
+        addTab("Products", products);
 
-            // Adjust currentIndex if necessary
-            int tabCount = getTabCount();
-            if (currentIndex >= tabCount) {
-                currentIndex = tabCount - 1;
-            }
-            if (currentIndex < 0) {
-                currentIndex = 0;
-            }
-            setSelectedIndex(currentIndex);
-        });
+        setSelectedIndex(currentIndex);
     }
 
-    public Upgrades(Globals _globals, EventBus eventBus) {
+    public Upgrades(Globals globals, EventBus eventBus) {
         this.eventBus = eventBus;
-        this.globals = _globals;
+        this.globals = globals;
 
         JScrollPane licenses = new LicenseUpgrades(globals, eventBus);
         JScrollPane market = new MarketUpgrades(globals, eventBus);
@@ -239,6 +220,7 @@ class Products extends JScrollPane {
         Gson gson = new Gson();
         TProduct[] products = gson.fromJson(productsJSONString, TProduct[].class);
 
+
         if (redoPrices) {
             storedButtons.buttons = new ArrayList<TBoughtProducts>();
 
@@ -283,8 +265,9 @@ class Products extends JScrollPane {
 
             }
         }
-
         for (TBoughtProducts product : storedButtons.buttons) {
+            product.buydate = globals.day;
+            product.quantity = 1;
             JButton button = new JButton(String.format(
                     "<html><center>%s<br/>%.2f$</center></html>", product.fullname, product.price));
             button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
@@ -315,7 +298,7 @@ class Products extends JScrollPane {
             }
 
 
-            if (product.price >= globals.money || globals.power <= 0 || !doesUserOwnLicense || !doesUserOwnAisle) {
+            if (product.price > globals.money || globals.power <= 0 || !doesUserOwnLicense || !doesUserOwnAisle) {
                 button.setForeground(Color.red);
                 button.setEnabled(false);
             }
@@ -324,17 +307,20 @@ class Products extends JScrollPane {
 
 
             button.addActionListener(e -> {
-                boolean isUnique = false;
+                TBoughtProducts existingProduct = globals.products.stream()
+                        .filter(boughtProduct -> boughtProduct.name.equals(product.name) && boughtProduct.buydate == globals.day)
+                        .findAny()
+                        .orElse(null);
 
-                for (TBoughtProducts product2 : globals.products) {
-                    if (product2.isTwoProductsEqual(product)) {
-                        product2.quantity++;
-                        isUnique = true;
-                        break;
-                    }
-                }
-
-                if (!isUnique) {
+                if (existingProduct != null) {
+                    System.out.println(existingProduct.quantity);
+                    int index = globals.products.indexOf(existingProduct);
+                    existingProduct.quantity += 2;
+                    globals.products.set(index, existingProduct);
+                    TBoughtProducts updatedProduct = globals.products.get(index);
+                    globals.products.remove(index);
+                    globals.products.add(index, updatedProduct);
+                } else {
                     globals.products.add(product);
                 }
 
@@ -342,7 +328,6 @@ class Products extends JScrollPane {
                 globals.money -= product.price;
 
                 eventBus.post(globals);
-                eventBus.post(new RedrawTableEvent(globals));
             });
 
 

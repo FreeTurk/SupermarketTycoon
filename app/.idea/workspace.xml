@@ -5,17 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c974a772-106f-484c-9c28-0b6a867353a1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/RedrawTableEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/8.10.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/8.10.2/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/8.10.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/8.10.2/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/8.10.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Stocks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Stocks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/TSaveFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/TSaveFile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/TopBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/TopBar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java" afterDir="false" />
     </list>
@@ -291,17 +291,6 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
   </component>
@@ -310,17 +299,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java</url>
-          <line>149</line>
+          <line>130</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Stocks.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java</url>
-          <line>105</line>
+          <line>86</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
@@ -331,6 +315,15 @@
           <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
           <option name="timeStamp" value="13" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/supermarkettycoon/Upgrades.java</url>
+          <line>23</line>
+          <properties class="org.supermarkettycoon.Upgrades" method="redoProductsPage">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
