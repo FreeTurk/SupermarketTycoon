@@ -19,7 +19,7 @@ class Main extends JFrame {
         TopBar topBar = new TopBar(globals);
         Stocks stocks = new Stocks(globals);
         Upgrades upgrades = new Upgrades();
-        SpriteScreen spriteScreen = new SpriteScreen();
+        SpriteScreen spriteScreen = new SpriteScreen(globals);
         GridBagConstraints c = new GridBagConstraints();
 
         // Sets the layout of the main window

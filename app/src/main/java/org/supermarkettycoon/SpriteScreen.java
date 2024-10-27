@@ -29,7 +29,7 @@ public class SpriteScreen extends JPanel implements ActionListener {
         Image centralImage;
 
         try {
-            centralImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("assets/Cart.png")));
+            centralImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("assets/Money.png")));
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -42,10 +42,10 @@ public class SpriteScreen extends JPanel implements ActionListener {
         g.drawImage(Objects.requireNonNull(centralImage), relcenterx, relcentery, sizex, sizey, null);
 
 
-        int x = relcenterx + (int) (radius * Math.cos(angle));
-        int y = relcentery + (int) (radius * Math.sin(angle));
+        int x = centerx + (int) (radius * Math.cos(angle)) - 40;
+        int y = centery + (int) (radius * Math.sin(angle)) - 40;
 
-        g.drawImage(Objects.requireNonNull(centralImage), x, y, 200, 200, null);
+        g.drawImage(Objects.requireNonNull(centralImage), x, y, 80, 80, null);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SpriteScreen extends JPanel implements ActionListener {
         repaint();
     }
 
-    public SpriteScreen() {
+    public SpriteScreen(Globals globals) {
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
 
