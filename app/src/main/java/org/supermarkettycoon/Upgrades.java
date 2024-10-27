@@ -2,16 +2,13 @@ package org.supermarkettycoon;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 class StoredButtons {
@@ -25,27 +22,38 @@ public class Upgrades extends JTabbedPane {
 
     @Subscribe
     public void redoProductsPage(NewDayEvent nde) {
-        // Remove any old products.
-        globals.products.forEach(product -> {
-            if (product.expiry_time == globals.day - product.buydate || product.quantity <= 1) {
-                globals.products.remove(product);
+        SwingUtilities.invokeLater(() -> {
+
+            // Collect products to remove instead of modifying during iteration
+            ArrayList<TBoughtProducts> productsToRemove = new ArrayList<TBoughtProducts>();
+            globals.products.forEach(product -> {
+                if (product.expiry_time == globals.day - product.buydate || product.quantity <= 10) {
+                    productsToRemove.add(product);
+                }
+            });
+            // Remove products after iteration
+            globals.products.removeAll(productsToRemove);
+
+            eventBus.post(storedButtons);
+
+            redoEverything(globals);
+
+
+            if (globals.day % 10 == 0) {
+                JScrollPane products = new Products(this.globals, eventBus, true, storedButtons);
+                removeTabAt(2);
+                addTab("Products", products);
+                setSelectedIndex(2);
             }
         });
 
-
-        if (globals.day % 10 == 0) {
-            JScrollPane products = new Products(this.globals, eventBus, true, storedButtons);
-            removeTabAt(2);
-            addTab("Products", products);
-            setSelectedIndex(2);
-        }
     }
 
     @Subscribe
     public void redoEverything(Globals globals) {
-        JScrollPane licenses = new LicenseUpgrades(globals, eventBus);
-        JScrollPane market = new MarketUpgrades(globals, eventBus);
-        JScrollPane products = new Products(globals, eventBus, false, storedButtons);
+        JScrollPane licenses = new LicenseUpgrades(this.globals, eventBus);
+        JScrollPane market = new MarketUpgrades(this.globals, eventBus);
+        JScrollPane products = new Products(this.globals, eventBus, false, storedButtons);
 
         int currentIndex = getSelectedIndex();
 
@@ -212,6 +220,7 @@ class Products extends JScrollPane {
         Gson gson = new Gson();
         TProduct[] products = gson.fromJson(productsJSONString, TProduct[].class);
 
+
         if (redoPrices) {
             storedButtons.buttons = new ArrayList<TBoughtProducts>();
 
@@ -233,45 +242,6 @@ class Products extends JScrollPane {
 
                 double price = random.nextDouble() * (max_price - min_price) + min_price;
 
-                JButton button = new JButton(String.format(
-                        "<html><center>%s<br/>%.2f$</center></html>", product.fullname, price));
-                button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
-
-
-                boolean doesUserOwnLicense = false;
-                boolean doesUserOwnAisle = false;
-
-                if (product.requires_license.equals("none")) {
-                    doesUserOwnLicense = true;
-                } else {
-                    for (TLicense license : globals.licenses) {
-                        if (license.name.equals(product.requires_license)) {
-                            doesUserOwnLicense = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (product.requires_aisle.equals("none")) {
-                    doesUserOwnAisle = true;
-                } else {
-                    for (TUpgrade upgrade : globals.upgrades) {
-                        if (upgrade.name.equals(product.requires_aisle)) {
-                            doesUserOwnAisle = true;
-                            break;
-                        }
-                    }
-                }
-
-
-                if (price >= globals.money || globals.power <= 0 || !doesUserOwnLicense || !doesUserOwnAisle) {
-                    button.setForeground(Color.red);
-                    button.setEnabled(false);
-                }
-
-
-                button.setFont(new Font("Arial", Font.PLAIN, 18));
-                innerPanel.add(button, c);
 
                 // Reflects the product listing to the TBoughtProducts interface to be saved
                 TBoughtProducts boughtProduct = new TBoughtProducts();
@@ -293,92 +263,74 @@ class Products extends JScrollPane {
 
                 storedButtons.buttons.add(boughtProduct);
 
-                button.addActionListener(e -> {
-                    boolean isUnique = false;
-
-                    for (int i = 0; i < globals.products.size(); i++) {
-                        if (globals.products.get(i).isTwoProductsEqual(boughtProduct)) {
-                            globals.products.get(i).quantity++;
-                            isUnique = true;
-                            break;
-                        }
-                    }
-
-                    if (!isUnique) {
-                        globals.products.add(boughtProduct);
-                    }
-
-                    globals.power--;
-                    globals.money -= boughtProduct.price;
-
-                    eventBus.post(globals);
-                });
-
-
             }
-        } else {
-            for (TBoughtProducts product : storedButtons.buttons) {
-                JButton button = new JButton(String.format(
-                        "<html><center>%s<br/>%.2f$</center></html>", product.fullname, product.price));
-                button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+        }
+        for (TBoughtProducts product : storedButtons.buttons) {
+            product.buydate = globals.day;
+            product.quantity = 1;
+            JButton button = new JButton(String.format(
+                    "<html><center>%s<br/>%.2f$</center></html>", product.fullname, product.price));
+            button.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
 
-                boolean doesUserOwnLicense = false;
-                boolean doesUserOwnAisle = false;
+            boolean doesUserOwnLicense = false;
+            boolean doesUserOwnAisle = false;
 
-                if (product.requires_license.equals("none")) {
-                    doesUserOwnLicense = true;
-                } else {
-                    for (TLicense license : globals.licenses) {
-                        if (license.name.equals(product.requires_license)) {
-                            doesUserOwnLicense = true;
-                            break;
-                        }
+            if (product.requires_license.equals("none")) {
+                doesUserOwnLicense = true;
+            } else {
+                for (TLicense license : globals.licenses) {
+                    if (license.name.equals(product.requires_license)) {
+                        doesUserOwnLicense = true;
+                        break;
                     }
                 }
-
-                if (product.requires_aisle.equals("none")) {
-                    doesUserOwnAisle = true;
-                } else {
-                    for (TUpgrade upgrade : globals.upgrades) {
-                        if (upgrade.name.equals(product.requires_aisle)) {
-                            doesUserOwnAisle = true;
-                            break;
-                        }
-                    }
-                }
-
-
-                if (product.price >= globals.money || globals.power <= 0 || !doesUserOwnLicense || !doesUserOwnAisle) {
-                    button.setForeground(Color.red);
-                    button.setEnabled(false);
-                }
-                button.setFont(new Font("Arial", Font.PLAIN, 18));
-                innerPanel.add(button, c);
-
-
-                button.addActionListener(e -> {
-                    boolean isUnique = false;
-
-                    for (int i = 0; i < globals.products.size(); i++) {
-                        if (globals.products.get(i).isTwoProductsEqual(product)) {
-                            globals.products.get(i).quantity++;
-                            isUnique = true;
-                            break;
-                        }
-                    }
-
-                    if (!isUnique) {
-                        globals.products.add(product);
-                    }
-
-                    globals.power--;
-                    globals.money -= product.price;
-
-                    eventBus.post(globals);
-                });
-
-
             }
+
+            if (product.requires_aisle.equals("none")) {
+                doesUserOwnAisle = true;
+            } else {
+                for (TUpgrade upgrade : globals.upgrades) {
+                    if (upgrade.name.equals(product.requires_aisle)) {
+                        doesUserOwnAisle = true;
+                        break;
+                    }
+                }
+            }
+
+
+            if (product.price > globals.money || globals.power <= 0 || !doesUserOwnLicense || !doesUserOwnAisle) {
+                button.setForeground(Color.red);
+                button.setEnabled(false);
+            }
+            button.setFont(new Font("Arial", Font.PLAIN, 18));
+            innerPanel.add(button, c);
+
+
+            button.addActionListener(e -> {
+                TBoughtProducts existingProduct = globals.products.stream()
+                        .filter(boughtProduct -> boughtProduct.name.equals(product.name) && boughtProduct.buydate == globals.day)
+                        .findAny()
+                        .orElse(null);
+
+                if (existingProduct != null) {
+                    System.out.println(existingProduct.quantity);
+                    int index = globals.products.indexOf(existingProduct);
+                    existingProduct.quantity += 2;
+                    globals.products.set(index, existingProduct);
+                    TBoughtProducts updatedProduct = globals.products.get(index);
+                    globals.products.remove(index);
+                    globals.products.add(index, updatedProduct);
+                } else {
+                    globals.products.add(product);
+                }
+
+                globals.power--;
+                globals.money -= product.price;
+
+                eventBus.post(globals);
+            });
+
+
         }
 
 

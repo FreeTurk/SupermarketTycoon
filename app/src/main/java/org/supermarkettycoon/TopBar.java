@@ -49,6 +49,7 @@ public class TopBar extends JPanel {
 
             int maxIndex = globals.products.size();
 
+
             for (int i = 0; i < maxIndex; i++) {
                 TBoughtProducts product = globals.products.get(i);
                 Random random = new Random();
@@ -69,9 +70,11 @@ public class TopBar extends JPanel {
 
 
             eventBus.post(new NewDayEvent());
-            eventBus.post(globals);
 
-            System.out.printf("Customers today %d%n", totalCustomers);
+
+            moneyLabel.setText(String.format("Money %.2f$", globals.money));
+            dayLabel.setText(String.format("Day %d (%s)", globals.day, globals.season()));
+            energyLabel.setText(String.format("Energy %d", globals.power));
 
             RedrawSpriteEvent rse = new RedrawSpriteEvent();
             rse.customerNumber = totalCustomers;
