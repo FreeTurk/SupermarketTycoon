@@ -26,6 +26,12 @@ Run the game:
 gradle run
 ```
 
+Or to build the Jar file run the command:
+   ```sh
+   ./gradlew clean build
+   ```
+
+
 **Build File** is located in
    ```sh
    app/build/libs
