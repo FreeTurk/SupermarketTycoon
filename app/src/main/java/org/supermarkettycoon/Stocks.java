@@ -128,7 +128,7 @@ public class Stocks extends JPanel {
                 }
 
                 // Calculates the maximum possible customers based on product quantity and price ratio
-                int maxCustomers = (int) (Math.round(((double) product.quantity / leftDayForProd))
+                int maxCustomers = (int) (Math.round(((double) product.quantity/2))
                         * (product.originalPrice / product.price));
 
                 // Determines a random sell amount based on maxCustomers
