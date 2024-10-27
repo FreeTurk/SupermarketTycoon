@@ -29,13 +29,17 @@ class Main extends JFrame {
 
         TopBar topBar = new TopBar(globals, eventBus);
         eventBus.register(topBar);
-        Stocks stocks = new Stocks(globals);
+        Stocks stocks = new Stocks(globals, eventBus);
         eventBus.register(stocks);
         Upgrades upgrades = new Upgrades(globals, eventBus);
         eventBus.register(upgrades);
 
 
-        SpriteScreen spriteScreen = new SpriteScreen();
+        SpriteScreen spriteScreen = new SpriteScreen(globals);
+<<<<<<< HEAD
+        eventBus.register(spriteScreen);
+=======
+>>>>>>> origin/frontend
         GridBagConstraints c = new GridBagConstraints();
 
         // Sets the layout of the main window
@@ -59,7 +63,6 @@ class Main extends JFrame {
 
         c.gridheight = 1;
         c.gridwidth = 1;
-        c.gridheight = 1;
         c.gridx = 1;
         c.gridy = 1;
         add(spriteScreen, c);
