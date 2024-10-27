@@ -18,7 +18,6 @@ public class TSaveFile {
     public double money = 1000;
     public int day = 1;
     public int power = 10;
-    public boolean bankrupt = false;
     public ArrayList<TLicense> licenses = new ArrayList<TLicense>();
     public ArrayList<TUpgrade> upgrades = new ArrayList<TUpgrade>();
     public ArrayList<TBoughtProducts> products = new ArrayList<TBoughtProducts>();

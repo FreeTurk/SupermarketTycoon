@@ -1,6 +1,7 @@
 package org.supermarkettycoon;
 
 import com.google.gson.Gson;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +29,7 @@ public class SaveFile extends TSaveFile {
             // Displays an error dialog if the username already exists
             JDialog dialog = new JDialog();
             dialog.setTitle("Error");
-            dialog.setModal(true); 
+            dialog.setModal(true);
             dialog.setLocationRelativeTo(null);
             dialog.setSize(300, 200);
 
@@ -36,15 +37,15 @@ public class SaveFile extends TSaveFile {
             dialog.add(label);
 
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setVisible(true); 
-            return; 
+            dialog.setVisible(true);
+            return;
         } else {
-            boolean isSaveFileCreated = savefile.createNewFile(); 
+            boolean isSaveFileCreated = savefile.createNewFile();
         }
 
         // Creates a new TSaveFile instance to hold save data
         TSaveFile sf = new TSaveFile();
-        sf.username = username; 
+        sf.username = username;
 
         // Converts the save file object to JSON format
         Gson gson = new Gson();
@@ -72,7 +73,6 @@ public class SaveFile extends TSaveFile {
         currentData.licenses = globals.licenses;
         currentData.money = globals.money;
         currentData.power = globals.power;
-        currentData.bankrupt = globals.bankrupt;
         currentData.products = globals.products;
         currentData.upgrades = globals.upgrades;
 
@@ -80,12 +80,12 @@ public class SaveFile extends TSaveFile {
         // Converts the current game data to JSON and writes it to the save file
         String newSaveData = gson.toJson(currentData, TSaveFile.class);
         writer.write(newSaveData);
-        writer.close(); 
+        writer.close();
     }
 
     // Loads the game data from the specified save file into the Globals object
     public void loadGame(Globals globals, File saveFile) throws java.io.IOException {
-        String saveFileJSON = ""; 
+        String saveFileJSON = "";
 
         // Reads the save file line by line and concatenates the data into a JSON string
         Scanner scanner = new Scanner(saveFile);
@@ -103,7 +103,6 @@ public class SaveFile extends TSaveFile {
         globals.licenses = sf.licenses;
         globals.money = sf.money;
         globals.power = sf.power;
-        globals.bankrupt = sf.bankrupt;
         globals.products = sf.products;
         globals.upgrades = sf.upgrades;
     }

@@ -1,18 +1,19 @@
 package org.supermarkettycoon;
 
 import com.google.common.eventbus.EventBus;
+
 import javax.swing.*;
 import java.awt.*;
 
 class Main extends JFrame {
 
     public Main() {
-        super("Supermarket Tycoon"); 
+        super("Supermarket Tycoon");
 
         // Creates and configures the layout for the main window
         GridBagLayout layout = new GridBagLayout();
-        layout.columnWeights = new double[]{0.3f, 0.5f, 0.2f}; 
-        layout.rowWeights = new double[]{0.0, 1.0}; 
+        layout.columnWeights = new double[]{0.3f, 0.5f, 0.2f};
+        layout.rowWeights = new double[]{0.0, 1.0};
         layout.rowHeights = new int[]{50, 0};
 
         // Initializes global settings and event bus for game state and communication
@@ -28,9 +29,9 @@ class Main extends JFrame {
 
         // Initializes various game panels and registers them with the event bus
         TopBar topBar = new TopBar(globals, eventBus);
-        eventBus.register(topBar); 
+        eventBus.register(topBar);
         Stocks stocks = new Stocks(globals, eventBus);
-        eventBus.register(stocks); 
+        eventBus.register(stocks);
         Upgrades upgrades = new Upgrades(globals, eventBus);
         eventBus.register(upgrades);
 
@@ -40,8 +41,8 @@ class Main extends JFrame {
 
         // Sets up the main window with specified settings
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(layout); 
-        setSize(1920, 1200); 
+        setLayout(layout);
+        setSize(1920, 1200);
 
         // Creates a GridBagConstraints object to control component positioning
         GridBagConstraints c = new GridBagConstraints();
@@ -78,11 +79,6 @@ class Main extends JFrame {
         // Centers the main window on the screen and makes it visible
         setLocationRelativeTo(null);
         setVisible(true);
-
-        // Checks if the player has gone bankrupt and shows LoseGameDialog if true
-        if (globals.bankrupt) {
-            new LoseGameDialog(this, globals).setVisible(true); 
-        }
     }
 
     public static void main(String[] args) {

@@ -2,26 +2,27 @@ package org.supermarkettycoon;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class TopBar extends JPanel {
-    JLabel moneyLabel; 
-    JLabel dayLabel; 
-    JLabel energyLabel; 
-    Globals globals; 
+    JLabel moneyLabel;
+    JLabel dayLabel;
+    JLabel energyLabel;
+    Globals globals;
 
     // Constructor to initialize the TopBar with global settings and event bus
     public TopBar(Globals globals, EventBus eventBus) {
         this.globals = globals;
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
-        layout.columnWeights = new double[]{1f, 1f, 1f, 1f}; 
+        layout.columnWeights = new double[]{1f, 1f, 1f, 1f};
 
-        c.insets = new Insets(0, 20, 0, 20); 
+        c.insets = new Insets(0, 20, 0, 20);
         setLayout(layout);
 
-        c.fill = GridBagConstraints.BOTH; 
+        c.fill = GridBagConstraints.BOTH;
 
         // Initializes and adds the money label to display the player's money
         moneyLabel = new JLabel(String.format("Money %.2f$", globals.money));
@@ -40,8 +41,8 @@ public class TopBar extends JPanel {
 
         // Action listener to update game state and handle daily changes when the button is clicked
         nextDay.addActionListener(e -> {
-            globals.day++; 
-            globals.power = 10; 
+            globals.day++;
+            globals.power = 10;
 
             // Adjusts power based on upgrades
             for (TUpgrade upgrade : globals.upgrades) {
@@ -65,12 +66,18 @@ public class TopBar extends JPanel {
                             String.format("You paid $%.2f as rent.", rentAmount),
                             "Rent Payment",
                             JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    // If funds are insufficient, display a Game Over message and disable the next day button
-                    globals.bankrupt = true;
-                    nextDay.setEnabled(false); 
-                    return; 
+                } else if (globals.money < rentAmount) {
+                    // Handle insufficient funds (e.g., Game Over)
+                    JOptionPane.showMessageDialog(this,
+                            "You don't have enough money to pay rent! Game Over.",
+                            "Game Over",
+                            JOptionPane.ERROR_MESSAGE);
+                    // Implement game over logic here
+                    // For example, disable the next day button or reset the game
+                    nextDay.setEnabled(false);
+                    return; // Exit the action listener to prevent further processing
                 }
+
             }
 
             eventBus.post(new NewDayEvent());
@@ -92,7 +99,7 @@ public class TopBar extends JPanel {
             }
         });
 
-        add(nextDay, c); 
+        add(nextDay, c);
     }
 
     // Method to update the top bar labels when the global state changes
