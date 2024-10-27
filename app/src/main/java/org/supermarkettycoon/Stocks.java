@@ -114,28 +114,49 @@ public class Stocks extends JPanel {
     @Subscribe
     public void dailyProductSellUpdate(NewDayEvent nde) {
         SwingUtilities.invokeLater(() -> {
+            int totalCustomers = 0;  // Keep track of total customers for the day
 
-            for (int i = 0; i < globals.products.size(); i++) {
-                TBoughtProducts product = globals.products.get(i);
+            for (Iterator<TBoughtProducts> iterator = globals.products.iterator(); iterator.hasNext(); ) {
+                TBoughtProducts product = iterator.next();
                 Random random = new Random();
 
                 int leftDayForProd = product.expiry_time - (globals.day - product.buydate);
+
+                // Remove expired products
+                if (leftDayForProd <= 0) {
+                    iterator.remove();
+                    continue;
+                }
+
+                // Process sales
                 int maxCustomers = (int) (Math.round(((double) product.quantity / leftDayForProd))
                         * (product.originalPrice / product.price));
-                int sellAmount = random.nextInt(0, maxCustomers + 1);
 
-                globals.money += product.price * sellAmount;
+                // Adjust sellAmount to avoid zero when there's stock
+                int sellAmount = maxCustomers > 0 ? random.nextInt(1, maxCustomers + 1) : 0;
 
                 if (sellAmount >= product.quantity) {
-                    globals.products.remove(product);
-                } else {
-                    globals.products.get(i).quantity -= sellAmount;
-                    globals.products.get(i).expiry_time--;
+                    sellAmount = product.quantity;
+                }
+
+                globals.money += product.price * sellAmount;
+                product.quantity -= sellAmount;
+                totalCustomers += sellAmount;
+
+                // Remove products with zero quantity after selling
+                if (product.quantity <= 0) {
+                    iterator.remove();
                 }
             }
 
+            // Update the GUI components if needed
             updateTable(globals);
             this.model.fireTableDataChanged();
+
+            // Post the event with the correct customerNumber
+            RedrawSpriteEvent rse = new RedrawSpriteEvent();
+            rse.customerNumber = totalCustomers;
+            eventBus.post(rse);
         });
     }
 

@@ -43,44 +43,19 @@ public class TopBar extends JPanel {
 
         nextDay.addActionListener(e -> {
             globals.day++;
+            
             globals.power = 10;
 
-            int totalCustomers = 0;
-
-            int maxIndex = globals.products.size();
-
-
-            for (int i = 0; i < maxIndex; i++) {
-                TBoughtProducts product = globals.products.get(i);
-                Random random = new Random();
-
-                int maxCustomers = (int) Math.round(((double) globals.day / 10) * (product.originalPrice / product.price));
-                int sellAmount = random.nextInt(0, maxCustomers + 1);
-
-                globals.money += product.price * sellAmount;
-
-                if (sellAmount >= product.quantity) {
-                    sellAmount = product.quantity;
-                }
-
-                globals.products.get(i).quantity -= sellAmount;
-                totalCustomers += sellAmount;
-                sellAmount = 0;
-            }
-
-
             eventBus.post(new NewDayEvent());
-
 
             moneyLabel.setText(String.format("Money %.2f$", globals.money));
             dayLabel.setText(String.format("Day %d (%s)", globals.day, globals.season()));
             energyLabel.setText(String.format("Energy %d", globals.power));
 
+            // If totalCustomers is needed elsewhere, consider updating it in the event subscribers
             RedrawSpriteEvent rse = new RedrawSpriteEvent();
-            rse.customerNumber = totalCustomers;
             eventBus.post(rse);
 
-            rse = new RedrawSpriteEvent();
             try {
                 globals.saveGame(globals);
             } catch (Exception ex) {
